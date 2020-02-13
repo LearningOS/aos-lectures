@@ -11,11 +11,9 @@
 
 ## Tendency of OS -- Reliability
 
-## 
+## Summary
 
-## 
-
-# Lec2 OS Architecture
+# Lec 2 OS Architecture
 
 ## History of OS Architecture -- THE
 
@@ -27,4 +25,20 @@
 
 ## Extensible Kernel
 
-## 
+## Summary
+
+# Lec3  System Virtualization Overview
+
+## Introduction
+
+## Traditional Virtualization Challenges
+
+## Virtualization Technologies -CPU
+
+## Virtualization Technologies -Mmeory
+
+## Virtualization Technologies -I/O
+
+## Some VMMs
+
+## Summary
