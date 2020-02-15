@@ -1,0 +1,363 @@
+\input{../preamble}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[第1讲]{第1讲 ：高级操作系统概述} % The short title appears at the bottom of every slide, the full title is only on the title page
+\subtitle{第二节：课程安排}
+\author{陈渝} % Your name
+\institute[清华大学] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+	清华大学计算机系 \\ % Your institution for the title page
+	\medskip
+	\textit{yuchen@tsinghua.edu.cn} % Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+%\begin{frame}
+%\frametitle{提纲} % Table of contents slide, comment this block out to remove it
+%\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+%\end{frame}
+%
+%%----------------------------------------------------------------------------------------
+%%	PRESENTATION SLIDES
+%%----------------------------------------------------------------------------------------
+%
+%%------------------------------------------------
+%\section{第一节：课程概述} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
+%%------------------------------------------------
+%-------------------------------------------------
+\begin{frame}
+	\frametitle{OS Overview}
+
+\Large
+\centering
+History of OS: Change!
+\large
+\begin{table}[]
+	\begin{tabular}{|l|l|l|l|l|}
+		\hline
+		Porperty & Element             & 1980        & 2020          & Factor       \\ \hline
+		Speed    & CPU            & 1 		MIPS    & 97,000 		MIPS & $9.7 \times  10^5 $  \\ \hline
+		& Memory         & 500 		ns    & 0.4 		ns      & $ 3.6 \times  10^3 $  \\ \hline
+		& Disk           & 18 		ms     & 4 		ms        & $ 2.2 \times   10^1  $ \\ \hline
+		& Network        & 300 		b/sec & 100 		Gb/sec  & $ 3.3	\times   10^8 $  \\ \hline
+		Capacity & Memory         & 64 		KB     & 1 		TB       & $ 2.5 \times   10^5 $  \\ \hline
+		& Disk           & 1 		MB      & 4 		TB        & $ 4.0 \times   10^6 $  \\ \hline
+		Other    & Address 		bits & 8           & 64            & $ 8  $           \\ \hline
+		& Users/machine  & 10          & 0.1           & $ 1.0 		\times  10^{-2}$  \\ \hline
+		Cost     & Per 		MIP      & \$100K/MIP  & \$.007899     & $ 1.0 \times   10^7 $  \\ \hline
+	\end{tabular}
+\end{table}
+
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{Changing Roles of the OS}
+	
+	\begin{itemize}\Large
+		\item What OS does depends on
+		\begin{itemize}\large
+			\item available hardware and software
+			\item changing uses of machines
+			\item changing expectations of users
+			
+		\end{itemize}
+	\end{itemize}
+	
+	
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{OS Concepts}
+	
+	\begin{itemize}\Large
+		\item Single-Machine OS/VMM
+		\begin{itemize}\large
+			\item Memory management
+			\item Process management
+			\item Synchronization
+			\item File systems and device support
+			
+		\end{itemize}
+		\item Security
+		\item Correctness
+		\item Distributed System
+	\end{itemize}
+	
+	
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[t]
+	\frametitle{Single-Machine OS/VMM}
+	\begin{columns}[t]
+		\begin{column}{.5\textwidth}
+			
+			\begin{itemize}\Large
+				\item Purposes
+				\begin{itemize}\large
+					\item Clean virtual machine
+					\item Hardware independence
+					\item Resource sharing and management
+					\item Persistent Data Storage
+					\item Protection
+					\item Real time support
+					\item Parallelism
+					\item human interface
+					
+				\end{itemize}
+			\end{itemize}
+			
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+			\begin{itemize}\Large
+				\item Strategy
+				\begin{itemize}\large
+					\item How do we organize the OS
+					effectively for development,
+					evolution, performance,
+					and security?
+					\item How do we use multi-
+					processor machines
+					effectively?
+					
+				\end{itemize}
+			\end{itemize}
+			
+		\end{column}
+	\end{columns}
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[t]
+	\frametitle{Memory Management}
+	\begin{columns}[t]
+		\begin{column}{.5\textwidth}
+			
+			\begin{itemize}\Large
+				\item Purposes
+				\begin{itemize}\large
+					\item Virtual memory: provides the
+					illusion of infinite physical
+					memory
+					\item Swapping: moves processes to
+					disk as necessary
+					\item Paging: allows processes to run
+					with only the active pages in
+					memory
+					\item Buffer Cache: speedup the IO
+					access
+					
+				\end{itemize}
+			\end{itemize}
+			
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+			\begin{itemize}\Large
+				\item Strategy
+				\begin{itemize}\large
+					\item How do we coordinate
+					machines to share
+					memory?
+					\item How can we simplify
+					memory management as
+					memory becomes
+					abundant?
+					
+				\end{itemize}
+			\end{itemize}
+			
+		\end{column}
+	\end{columns}
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[t]
+	\frametitle{Process Scheduling}
+	\begin{columns}[t]
+		\begin{column}{.5\textwidth}
+			
+			\begin{itemize}\Large
+				\item Purposes
+				\begin{itemize}\large
+					\item Provides the illusion of multiple
+					processes running at the same
+					time on a single processor
+					\item Context switching: changing the
+					attention of the processor
+					\begin{itemize}\large
+						\item Involves saving and restoring
+						states
+						\item Necessary to cross kernel
+						boundary
+					\end{itemize}
+				\end{itemize}
+			\end{itemize}
+			
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+			\begin{itemize}\Large
+				\item Strategy
+				\begin{itemize}\large
+					\item How do we achieve fairness,
+					high throughput, and
+					responsiveness at the same
+					time?
+					\item How do we reduce or avoid the
+					cost of context switching?
+					
+				\end{itemize}
+			\end{itemize}
+			
+		\end{column}
+	\end{columns}
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[t]
+	\frametitle{Synchronization }
+	\begin{columns}[t]
+		\begin{column}{.5\textwidth}
+			
+			\begin{itemize}\Large
+				\item Purposes
+				\begin{itemize}\large
+					\item Provides correct
+					execution or
+					coordinating threads
+					in the face of
+					arbitrary context
+					switching
+					
+				\end{itemize}
+			\end{itemize}
+			
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+			\begin{itemize}\Large
+				\item Strategy
+				\begin{itemize}\large
+					\item Atomic actions: all or nothing
+					\item Mutual exclusion: one thread in the
+					critical section at a time
+					\item Semaphores: atomic, counter-
+					based locks
+					\item Avoid Deadlock: circular waiting on
+					resources
+					
+				\end{itemize}
+			\end{itemize}
+			
+		\end{column}
+	\end{columns}
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[t]
+	\frametitle{File Systems}
+	\begin{columns}[t]
+		\begin{column}{.5\textwidth}
+			
+			\begin{itemize}\Large
+				\item Purposes
+				\begin{itemize}\large
+					\item File: data + attributes
+					\item File system services:
+					\begin{itemize}\large
+						\item Organization
+						\item Naming
+						\item Access
+						\item Synchronization
+						\item Protection and security
+	
+					\end{itemize}					
+				\end{itemize}
+			\end{itemize}
+			
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+			\begin{itemize}\Large
+				\item Strategy
+				\begin{itemize}\large
+					\item How do we make different file
+					systems work together, even across
+					machines?
+					\item How do we provide consistency,
+					availability, and reliability to copies
+					of a file across multiple machines?
+					\item How do we handle very large data
+					sets?
+					
+				\end{itemize}
+			\end{itemize}
+			
+		\end{column}
+	\end{columns}
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[t]
+	\frametitle{I/O Device }
+	\begin{columns}[t]
+		\begin{column}{.5\textwidth}
+			
+			\begin{itemize}\Large
+				\item Purposes
+				\begin{itemize}\large
+					\item I/O devices tend to be a
+					lot slower than memory
+					speed
+					\item Caching: stores extra
+					data in memory in hope
+					of near-term reuse
+					
+				\end{itemize}
+			\end{itemize}
+			
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+			\begin{itemize}\Large
+				\item Strategy
+				\begin{itemize}\large
+					\item How do we coordinate
+					the memory resources
+					across machines to
+					enhance performance?
+					\item How do we handle new
+					devices with new
+					characteristics?
+				\end{itemize}
+			\end{itemize}
+			
+		\end{column}
+	\end{columns}
+\end{frame}
+%----------------------------------------------
+\end{document}
