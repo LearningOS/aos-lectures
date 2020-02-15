@@ -1,0 +1,166 @@
+\input{../preamble}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[第1讲]{第1讲 ：Advanced OS Overview} % The short title appears at the bottom of every slide, the full title is only on the title page
+\subtitle{第四节：Tendency of OS -- Performance}
+\author{陈渝} % Your name
+\institute[清华大学] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+	清华大学计算机系 \\ % Your institution for the title page
+	\medskip
+	\textit{yuchen@tsinghua.edu.cn} % Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+%\begin{frame}
+%\frametitle{提纲} % Table of contents slide, comment this block out to remove it
+%\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+%\end{frame}
+%
+%%----------------------------------------------------------------------------------------
+%%	PRESENTATION SLIDES
+%%----------------------------------------------------------------------------------------
+%
+%%------------------------------------------------
+%\section{第一节：课程概述} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
+%%------------------------------------------------
+%-------------------------------------------------
+\begin{frame}
+	\frametitle{Tendency}
+
+	\begin{itemize}\huge
+	\item \textbf{Performance}
+	\item Reliability
+	\item Correctness
+	
+\end{itemize}
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{Multi-Core Challenges}
+	
+	\begin{itemize}\Large
+		\item Today's Commodity Multi-Cores
+		\item More cores can be integrated
+		\begin{itemize}\Large
+			\item E.g. Intel's 48-core chip \& AMD's 64-core chip
+			\item More cores can be integrated, 1000+ cores (<10years)
+
+	\centering
+	\includegraphics[width=0.6\textwidth]{multicore}
+			
+		\end{itemize}\pause
+	\item However, can operating systems and applications use
+	these cores effectively?
+	\end{itemize}
+
+	
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}
+	\frametitle{ }
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			
+		\begin{itemize}\LARGE
+			\item Linux
+			\item Solaris
+			\item FreeBSD
+			\item Windows
+			\item VxWorks
+			
+		\end{itemize}
+			
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+			\includegraphics[width=0.8\textwidth]{linux-solaris-freebsd}
+			
+		\end{column}
+	\end{columns}
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}
+	\frametitle{ }
+	\begin{columns}
+		\begin{column}{.3\textwidth}
+			
+			\begin{itemize}\LARGE
+				\item Linux
+				\item Solaris
+				\item FreeBSD
+				\item Windows
+				\item VxWorks
+				
+			\end{itemize}
+			
+		\end{column}
+		
+		\begin{column}{0.7\textwidth}
+			
+			\includegraphics[width=1.0\textwidth]{os-multicore}
+			
+		\end{column}
+	\end{columns}
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}
+	\frametitle{ }
+	\begin{columns}[t]
+		\begin{column}{.3\textwidth}
+			\begin{itemize}\LARGE
+				\item Linux
+				\item Solaris
+				\item FreeBSD
+				\item Windows
+				\item VxWorks
+				
+			\end{itemize}
+			
+		\end{column}
+		
+		\begin{column}{0.7\textwidth}
+			
+			\includegraphics[width=1.0\textwidth]{lock-multicore}
+			
+		\end{column}
+	\end{columns}
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{Some Conclusions}
+	
+	\begin{itemize}\Large
+		\item No system scales clearly better than another in
+		all aspects for micro-benchmark test
+		\item Linux and Solaris are competitive in application
+		benchmark test, FreeBSD loses both in
+		performance and scalability
+		\item Kernel synchronizations protecting the shared
+		data structure are the main bottlenecks on multi-
+		core platform
+		
+	\end{itemize}	
+	
+\end{frame}
+%----------------------------------------------
+%----------------------------------------------
+\end{document}
