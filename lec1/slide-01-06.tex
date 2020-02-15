@@ -1,0 +1,207 @@
+\input{../preamble}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[第1讲]{第1讲 ：Advanced OS Overview} % The short title appears at the bottom of every slide, the full title is only on the title page
+\subtitle{第四节：Tendency of OS -- Correctness}
+\author{陈渝} % Your name
+\institute[清华大学] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+	清华大学计算机系 \\ % Your institution for the title page
+	\medskip
+	\textit{yuchen@tsinghua.edu.cn} % Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+%\begin{frame}
+%\frametitle{提纲} % Table of contents slide, comment this block out to remove it
+%\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+%\end{frame}
+%
+%%----------------------------------------------------------------------------------------
+%%	PRESENTATION SLIDES
+%%----------------------------------------------------------------------------------------
+%
+%%------------------------------------------------
+%\section{第一节：课程概述} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
+%%------------------------------------------------
+%-------------------------------------------------
+\begin{frame}
+	\frametitle{Tendency}
+
+	\begin{itemize}\huge
+	\item Performance
+	\item Reliability
+	\item \textbf{Correctness}
+	
+\end{itemize}
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{Standard Motivating Slides for Verification}
+
+	\centering
+	\includegraphics[width=0.8\textwidth]{bug-ariane}
+
+	
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{Standard Motivating Slides for Verification}
+	
+	\centering
+	\includegraphics[width=0.8\textwidth]{bug-priuscar}
+	
+	
+\end{frame}
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{Basic Idea}
+	
+	\begin{itemize}\Large
+		\item Certified Software: Problem Definition
+		\begin{itemize}\large
+			\item Hardware
+			\begin{itemize}\large
+				\item processors, memory, storage, devices, ...
+	
+			\end{itemize}
+			\item Software
+			\begin{itemize}\large
+				\item bootloader, device drivers, OS, runtime, applications, ...
+			
+			\end{itemize}
+			\item Need a mathematical proof showing that
+			as long as the hardware works, the software
+			always work according to its specification						
+		\end{itemize}
+	\end{itemize}
+	
+	\centering
+\includegraphics[width=0.8\textwidth]{prog-spec}
+	
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{AIM : The Machine}
+	\LARGE
+	Abstract Interrupt Machine
+	\centering
+	\includegraphics[width=0.8\textwidth]{aim-arch}
+	
+	
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[t]
+	\frametitle{ Challenges of AIM}
+	\begin{columns}[t]
+		\begin{column}{.5\textwidth}
+			
+			\begin{itemize}\Large
+				\item Components come
+				from different
+				sources
+				\begin{itemize}\large
+					\item Manually written
+					assembly
+					\item C/C++
+					\item Type safe languages(Java, C\#)
+					\item Go, Rust
+					\item DSL
+				\end{itemize}
+			\end{itemize}
+			
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+			\begin{itemize}\Large
+				\item Many different features
+				\begin{itemize}\large
+					\item Code loading
+					\item Control abstractions
+					\begin{itemize}\large
+						\item jmp (goto)/functions
+						\item exceptions/interrupts
+						\item process/threads
+					\end{itemize}		
+					
+					\item Memory update
+					\begin{itemize}\large
+						\item type-preserving update
+						\item type-changing update
+						\item pointer arithmetic
+					\end{itemize}	
+					\item Device drivers and I/O
+					\item Hardware ...					
+				\end{itemize}
+			\end{itemize}
+			
+		\end{column}
+	\end{columns}
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{Some Conclusions}
+	
+	\begin{itemize}\Large
+		\item AIM machine
+		\begin{itemize}\large
+			\item low-level
+			\item can implement interrupt handlers and thread libraries
+			
+		\end{itemize}
+	
+		\item A program logic
+		\begin{itemize}\large
+			\item following local reasoning in separation logic
+			\item modeling cli/sti, switch, block/unblock in terms of
+			memory ownership transfer
+			\item can certify different implementation of locks and C.V.s
+			
+		\end{itemize}
+	\end{itemize}
+	
+	
+\end{frame}
+%----------------------------------------------
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{CONCLUSION}
+	
+	\LARGE
+	OS is an interesting research area.
+	\begin{block}{《儒效篇》--荀子}
+	不闻不若闻之，闻之不若见之，见之不若知之，
+	知之不若行之；学至于行之而止矣。 
+\end{block} 	
+	\begin{itemize}\Large
+%		\item OS is an interesting research area.
+%		\begin{itemize}\Large
+			\item Find problems
+			\item Analysis
+			\item Practice
+			\item Write paper
+%		\end{itemize}
+	\end{itemize}
+     
+	
+\end{frame}
+%----------------------------------------------
+\end{document}

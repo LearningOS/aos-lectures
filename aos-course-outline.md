@@ -11,6 +11,8 @@
 
 ## Tendency of OS -- Reliability
 
+## Tendency of OS -- Correctness
+
 ## Summary
 
 # Lec 2 OS Architecture

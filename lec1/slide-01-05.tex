@@ -1,0 +1,159 @@
+\input{../preamble}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[第1讲]{第1讲 ：Advanced OS Overview} % The short title appears at the bottom of every slide, the full title is only on the title page
+\subtitle{第五节：Tendency of OS -- Reliability}
+\author{陈渝} % Your name
+\institute[清华大学] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+	清华大学计算机系 \\ % Your institution for the title page
+	\medskip
+	\textit{yuchen@tsinghua.edu.cn} % Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+%\begin{frame}
+%\frametitle{提纲} % Table of contents slide, comment this block out to remove it
+%\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+%\end{frame}
+%
+%%----------------------------------------------------------------------------------------
+%%	PRESENTATION SLIDES
+%%----------------------------------------------------------------------------------------
+%
+%%------------------------------------------------
+%\section{第一节：课程概述} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
+%%------------------------------------------------
+%-------------------------------------------------
+\begin{frame}
+	\frametitle{Tendency}
+
+	\begin{itemize}\huge
+	\item Performance
+	\item \textbf{Reliability}
+	\item Correctness
+	
+\end{itemize}
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{History of Security Problem}
+	
+\begin{itemize}\Large
+	\item Originally, there was no security/safety problem
+	\item Later, there was a problem, but nobody cared
+	\item Now, there are increasing problems, and people are
+	beginning to care
+	
+	
+\end{itemize}	
+
+\centering
+\includegraphics[width=0.6\textwidth]{cve-dirtycow}
+	
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{Threat Analysis}
+	
+	\begin{itemize}\large
+		\item What are we trying to protect? (and why?)
+		\item What are the vulnerabilities of those assets?
+		\item Who might（accidently） exploit a vulnerability?
+		\item How can we prevent a specific threat?
+		\item How much is it worth to us to prevent it?
+%		\item How much will it cost to prevent it?		
+		
+	\end{itemize}	
+	
+	\centering
+	\includegraphics[width=0.4\textwidth]{cve-android}
+	
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{The Core Technical Problem}
+	
+	\begin{itemize}\large
+		\item Controlling access to machine and data resources
+		\item Controlling the way access rights are passed from
+		holder to holder
+		\begin{itemize}\large
+			\item person to person
+			\item program to program
+		\end{itemize}
+		\item Preventing maliciousness and errors from subverting
+		the controls
+
+		
+	\end{itemize}	
+	
+	\centering
+	\includegraphics[width=0.4\textwidth]{linux-security}
+	
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{System Security Technology}
+
+	
+	\centering
+	\includegraphics[width=0.8\textwidth]{security-ourwork}
+	
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{Current Status}
+	
+	\begin{itemize}\large
+		\item 对当前Android漏洞的理解
+		\begin{itemize}\large
+			\item Sematic Vulnerability 越来越多
+			\item 数据泄漏漏洞的威胁越来越大
+		\end{itemize}
+		
+		
+	\end{itemize}	
+	
+	\centering
+	\includegraphics[width=0.7\textwidth]{os-android-security}
+	
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{Current Status}
+	
+	\begin{itemize}\large
+		\item 对当前Linux Kernel漏洞的理解
+		\begin{itemize}\large
+			\item Linux漏洞有扩大化的趋势
+			\item 但发现Linux漏洞难度加大
+		\end{itemize}
+		
+		
+	\end{itemize}	
+	
+	\centering
+	\includegraphics[width=0.7\textwidth]{os-linux-security}
+	
+\end{frame}
+%----------------------------------------------
+%----------------------------------------------
+\end{document}
