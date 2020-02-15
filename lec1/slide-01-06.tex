@@ -5,7 +5,7 @@
 %----------------------------------------------------------------------------------------
 
 \title[第1讲]{第1讲 ：Advanced OS Overview} % The short title appears at the bottom of every slide, the full title is only on the title page
-\subtitle{第四节：Tendency of OS -- Correctness}
+\subtitle{第六节：Tendency of OS -- Correctness}
 \author{陈渝} % Your name
 \institute[清华大学] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
 {
@@ -66,6 +66,16 @@
 	
 	
 \end{frame}
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{seL4:Formal Verification of an OS Kernel}
+	
+	\centering
+	\includegraphics[width=0.8\textwidth]{sel4}
+	
+	
+\end{frame}
 %----------------------------------------------
 \begin{frame}[plain]	
 	\frametitle{Basic Idea}
@@ -106,7 +116,7 @@
 \end{frame}
 
 %----------------------------------------------
-\begin{frame}[t]
+\begin{frame}[plain,t]
 	\frametitle{ Challenges of AIM}
 	\begin{columns}[t]
 		\begin{column}{.5\textwidth}
@@ -132,20 +142,20 @@
 			\begin{itemize}\Large
 				\item Many different features
 				\begin{itemize}\large
-					\item Code loading
-					\item Control abstractions
+					\item Code loading \pause
+					\item Control abstractions 
 					\begin{itemize}\large
 						\item jmp (goto)/functions
 						\item exceptions/interrupts
 						\item process/threads
-					\end{itemize}		
+					\end{itemize}	\pause	
 					
-					\item Memory update
+					\item Memory update 
 					\begin{itemize}\large
 						\item type-preserving update
 						\item type-changing update
 						\item pointer arithmetic
-					\end{itemize}	
+					\end{itemize}	\pause
 					\item Device drivers and I/O
 					\item Hardware ...					
 				\end{itemize}

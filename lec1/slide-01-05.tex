@@ -35,7 +35,7 @@
 %\section{第一节：课程概述} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
 %%------------------------------------------------
 %-------------------------------------------------
-\begin{frame}
+\begin{frame}[plain]
 	\frametitle{Tendency}
 
 	\begin{itemize}\huge
@@ -47,6 +47,30 @@
 \end{frame}
 
 
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{Definition}
+	\Large
+	\begin{block}{Reliability: from IEEE definition}
+		The ability of a system or component to perform its required functions under stated conditions for a specified period of time
+	\end{block} \pause
+
+	\begin{itemize}\large
+		\item Usually stronger than simply availability: means that the system is not only “up”, but also working correctly
+		\item Includes availability, \textbf{security, fault tolerance}/durability
+		\item Must make sure data survives when system crashes, disk crashes, etc
+		
+	\end{itemize}	
+
+%Availability: the probability that the system can accept and process requests
+%Often measured in “nines” of probability.  So, a 99.9% probability is considered “3-nines of availability”
+%Key idea here is independence of failures
+%
+%Durability: the ability of a system to recover data despite faults
+%This idea is fault tolerance applied to data
+%Doesn’t necessarily imply availability: information on pyramids was very durable, but could not be accessed until discovery of Rosetta Stone
+
+\end{frame}
 %----------------------------------------------
 \begin{frame}[plain]	
 	\frametitle{History of Security Problem}
@@ -69,18 +93,20 @@
 \begin{frame}[plain]	
 	\frametitle{Threat Analysis}
 	
+	\centering
+	\includegraphics[width=0.35\textwidth]{cve-android}
+	
 	\begin{itemize}\large
-		\item What are we trying to protect? (and why?)
-		\item What are the vulnerabilities of those assets?
-		\item Who might（accidently） exploit a vulnerability?
-		\item How can we prevent a specific threat?
-		\item How much is it worth to us to prevent it?
+		\item What are we trying to protect? (and why?)\pause
+		\item What are the vulnerabilities of those assets?\pause
+		\item Who might（accidently） exploit a vulnerability?  \pause
+		\item How can we prevent a specific threat? \pause
+		\item How much is it worth to us to prevent it? \pause
 %		\item How much will it cost to prevent it?		
 		
 	\end{itemize}	
 	
-	\centering
-	\includegraphics[width=0.4\textwidth]{cve-android}
+
 	
 \end{frame}
 
@@ -151,7 +177,7 @@
 	\end{itemize}	
 	
 	\centering
-	\includegraphics[width=0.7\textwidth]{os-linux-security}
+	\includegraphics[width=1.0\textwidth]{os-linux-security}
 	
 \end{frame}
 %----------------------------------------------
