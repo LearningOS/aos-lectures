@@ -1,0 +1,204 @@
+\input{../preamble}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[第1讲]{第1讲 ：高级操作系统概述} % The short title appears at the bottom of every slide, the full title is only on the title page
+\subtitle{第二节：课程安排}
+\author{陈渝} % Your name
+\institute[清华大学] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+	清华大学计算机系 \\ % Your institution for the title page
+	\medskip
+	\textit{yuchen@tsinghua.edu.cn} % Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+%\begin{frame}
+%\frametitle{提纲} % Table of contents slide, comment this block out to remove it
+%\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+%\end{frame}
+%
+%%----------------------------------------------------------------------------------------
+%%	PRESENTATION SLIDES
+%%----------------------------------------------------------------------------------------
+%
+%%------------------------------------------------
+%\section{第一节：课程概述} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
+%%------------------------------------------------
+%-------------------------------------------------
+\begin{frame}[t]
+	\frametitle{Scheduling}
+
+\large
+Scheduling
+\begin{itemize}
+	
+	\item Monday (8:00-9:35)　
+	\item 4-101, 4th building
+
+\end{itemize}
+\begin{table}[]
+	\begin{tabular}{|c|l|}
+		\hline
+		1 & Lec 1 Advanced OS Overview                        \\ \hline
+		2 & Lec 2 OS Architecture                             \\ \hline
+		3 & Lec3+4  System Virtualization Overview            \\ \hline
+		4 & Lec5+6  OS/System API/Interface                   \\ \hline
+		5 & Lec7+8 OS for MultiCore Architecture              \\ \hline
+		6 & Lec 9+10 OS/System Security                       \\ \hline
+		7 & Lec 11+12 Correctness: OS/System Verification     \\ \hline
+		8 & Lec 13+14 OS Kernel and HLL                       \\ \hline
+		9 & Lec 15+16 Invited Talks From Visitors \& Students \\ \hline
+	\end{tabular}
+\end{table}
+
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{Reading Grading}
+	
+	\begin{itemize}\Large
+		\item 4 Papers Summaries and critiques 60%
+		\begin{itemize}\large
+			\item In 12 weeks
+			\item include report doc(4+ or 4000 words inA4 pages) presentation (15+
+			pages)
+			\item Research Areas (14 research domains)
+			\begin{itemize}	\large
+				\item OS/VMM Architectures
+				\item Performance/Multicore
+				\item Security/Find Bug
+				\item Correctness/Verification,etc.
+			\end{itemize}		
+			\item The best papers are from famous system-related conferences
+			\item \href{https://github.com/chyyuu/aos_course/blob/master/readinglist.md}{ReadingList of OS}			
+		\end{itemize}
+	\end{itemize}
+	
+	
+\end{frame}
+%-------------------------------------------------
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{Reading Critiques}
+	
+	\begin{itemize}\Large
+		\item Need to address the following:
+		\begin{itemize}\large
+			
+			\item Summary of major innovations
+			\item What the problems the paper mentioned?
+			\item How about the important related works/papers?
+			\item What are some intriguing aspects of the paper?
+			\item How to test/compare/analyze the results?
+			\item How can the research be improved?
+			\item If you write this paper, then how would you do?
+			\item What’s your test Results about the paper?
+			\item Give the survey paper list in the same area.
+			
+		\end{itemize}
+	\end{itemize}
+	
+	
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{Project Grading}
+	
+	\begin{itemize}\Large
+		\item One Project		40%
+		\begin{itemize}\large
+			\item Didn't finish rcore/ucore/xv6/jos labs
+			\begin{itemize}\large
+				\item Analyze/Testing/Improving ucore OS
+				\item https://github.com/chyyuu/os\_tutorial\_lab
+				\item https://github.com/chyyuu/ucore\_os\_lab
+				
+			\end{itemize}
+			\item Already finished ucore/xv6/jos labs
+			\begin{itemize}\large
+				\item \href{https://github.com/chyyuu/aos_course/blob/master/readinglist.md}{ReadingList of OS}
+				\item find a interesting research topic/project
+				\item analysis/practice deeply
+			\end{itemize}
+		\end{itemize}
+	\end{itemize}
+	
+	
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{Project Proposal}
+	
+	\begin{itemize}\Large
+		\item Due on the 2nd week
+		\item 2-page written proposal
+		\begin{itemize}\large
+			\item team members (<=3)
+			\item Motivation
+			\item The state-of-the-art status
+			\item Methodology
+			\item Expected results
+			\item Timeline
+			\item Division of labor among teams
+			\item Some references
+			
+		\end{itemize}
+	\end{itemize}
+	
+	
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{Project Midterm/Final Exam}
+	
+	\begin{itemize}\Large
+		\item 10-15 minutes Presentation
+		\item Midterm
+		\begin{itemize}\large
+			\item 3~10 page written paper/report
+			\item demo
+			
+		\end{itemize}
+		\item Final
+		\begin{itemize}\large
+			\item 5~15 page written paper/ project report
+			\item demo
+			
+		\end{itemize}	
+	\end{itemize}
+	
+	
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{Other Choose}
+	
+	\begin{itemize}\Large
+		\item I can not understand the paper OR my coding
+		ability is poor
+		\begin{itemize}\large
+			\item Need to talk with me ASAP
+			
+		\end{itemize}
+	\end{itemize}
+	
+	
+\end{frame}
+%----------------------------------------------
+\end{document}

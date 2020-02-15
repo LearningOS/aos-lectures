@@ -95,4 +95,4 @@
 
 ## The benefits and costs of writing a POSIX kernel in a high-level language
 
-# Lec 15+16 Invited Talk From Visitors & Students
+# Lec 15+16 Invited Talks From Visitors & Students
