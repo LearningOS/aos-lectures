@@ -5,7 +5,7 @@
 %----------------------------------------------------------------------------------------
 
 \title[第1讲]{第2讲 ：OS Architecture \& Structure} % The short title appears at the bottom of every slide, the full title is only on the title page
-\subtitle{第一节：Overview }
+\subtitle{第三节：Monolithic kernel -- UNIX }
 \author{陈渝} % Your name
 \institute[清华大学] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
 {
@@ -36,7 +36,7 @@
 %%------------------------------------------------
 %-------------------------------------------------
 \begin{frame}[plain]
-	\frametitle{Recap}
+	\frametitle{UNIX}
 	
 	
 	
@@ -44,24 +44,20 @@
 		
 		\begin{column}{.4\textwidth}
 			
-			\includegraphics[width=1.\textwidth]{os-position}
+			\includegraphics[width=1.\textwidth]{unix-authors}
 			
 		\end{column}
 		
 		\begin{column}{.6\textwidth}
 			
-			\Large
-			Why OS Architecture \& Structure ?
+%			\Large
+			UNIX
 			\begin{itemize}
-				\item for user
-				\begin{itemize}\large
-					\item should be convenient to use, easy to learn, reliable, and fast，etc.
-				\end{itemize}
-				\item for system
-				\begin{itemize}\large
-					\item should be easy to design, implement, and maintain
-					\item flexible, reliable, error-free, and efficient
-				\end{itemize}
+				\item Ken Thompson, Dennis Ritchie
+				\item Douglas McIlroy, and J. F. Ossanna
+		 		\item  The name (written Unics at the beginning) was coined by Brian
+		 		Kernighan as a pun on Multics
+		 	
 			\end{itemize}	
 			
 %			\includegraphics[width=1.\textwidth]{msdos}		
@@ -75,181 +71,79 @@
 
 %-------------------------------------------------
 \begin{frame}[plain]
-	\frametitle{Recap}
-
-
-
-	\begin{columns}
-
-	\begin{column}{.5\textwidth}
-	
-	\includegraphics[width=1.\textwidth]{os-position}
-	
-	\end{column}
-
-	\begin{column}{.5\textwidth}
-	
-	\Large
-    OS Structure	
-	\begin{itemize}
-	\item Simple kernel
-%	\item Monolithic kernel
-%	\item Micro kernel
-%	\item Exokernel
-%	\item VMM, etc...
-	\end{itemize}	
-
-	\includegraphics[width=1.\textwidth]{msdos}		
-	\end{column}
+	\frametitle{UNIX}
 	
 
-\end{columns}
-
-
-\end{frame}
-
-
-%-------------------------------------------------
-\begin{frame}[plain]
-	\frametitle{Recap}
-	
-	
-	
-	\begin{columns}
-		
-		\begin{column}{.5\textwidth}
-			
-			\includegraphics[width=1.\textwidth]{os-position}
-			
-		\end{column}
-		
-		\begin{column}{.5\textwidth}
-			
-			\Large
-			OS Structure	
-			\begin{itemize}
-%				\item Simple kernel
-					\item Monolithic kernel
-				%	\item Micro kernel
-				%	\item Exokernel
-				%	\item VMM, etc...
-			\end{itemize}	
-			
-			\includegraphics[width=1.\textwidth]{multi-level-os-arch}		
-		\end{column}
-		
-		
-	\end{columns}
-	
+		\begin{itemize}
+		\item Thompson wrote the first version of the yet-unnamed operating
+		system in assembly language for a DEC PDP-7 minicomputer
+		\item  Thompson developed a compiler for a new high-level language
+		he called B (stripped-down version of the BCPL language).  
+		In 1972 Dennis Ritchie created a new language called C
+		\item In 1973 most of the UNIX kernel was
+		rewritten in C
+						
+		\end{itemize}
+			\centering
+			\includegraphics[width=.7\textwidth]{Thompson}
 	
 \end{frame}
 
 %-------------------------------------------------
 \begin{frame}[plain]
-	\frametitle{Recap}
+	\frametitle{UNIX}
 	
+	\centering
+	\includegraphics[width=1.\textwidth]{unix-family}
 	
+\end{frame}
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{UNIX architecture}
 	
-	\begin{columns}
-		
-		\begin{column}{.5\textwidth}
-			
-			\includegraphics[width=1.\textwidth]{os-position}
-			
-		\end{column}
-		
-		\begin{column}{.5\textwidth}
-			
-			\Large
-			OS Structure	
-			\begin{itemize}
-%				\item Simple kernel
-				%	\item Monolithic kernel
-					\item Micro kernel
-				%	\item Exokernel
-				%	\item VMM, etc...
-			\end{itemize}	
-			
-			\includegraphics[width=1.\textwidth]{microkernel-arch}		
-		\end{column}
-		
-		
-	\end{columns}
-	
+	\centering
+	\includegraphics[width=.9\textwidth]{unix-arch}
 	
 \end{frame}
 
 %-------------------------------------------------
 \begin{frame}[plain]
-	\frametitle{Recap}
+	\frametitle{UNIX architecture}
 	
-	
-	
-	\begin{columns}
-		
-		\begin{column}{.5\textwidth}
-			
-			\includegraphics[width=1.\textwidth]{os-position}
-			
-		\end{column}
-		
-		\begin{column}{.5\textwidth}
-			
-			\Large
-			OS Structure	
-			\begin{itemize}
-%				\item Simple kernel
-				%	\item Monolithic kernel
-				%	\item Micro kernel
-					\item Exokernel
-				%	\item VMM, etc...
-			\end{itemize}	
-			
-			\includegraphics[width=1.\textwidth]{exokernel-arch}		
-		\end{column}
-		
-		
-	\end{columns}
-	
+	\centering
+	\includegraphics[width=1.\textwidth]{unix-fs-1}
 	
 \end{frame}
 
 %-------------------------------------------------
 \begin{frame}[plain]
-	\frametitle{Recap}
+	\frametitle{UNIX architecture}
 	
+	\centering
+	\includegraphics[width=1.\textwidth]{unix-fs-2}
 	
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{UNIX architecture}
 	
-	\begin{columns}
-		
-		\begin{column}{.5\textwidth}
-			
-			\includegraphics[width=1.\textwidth]{os-position}
-			
-		\end{column}
-		
-		\begin{column}{.5\textwidth}
-			
-			\Large
-			OS Structure	
-			\begin{itemize}
-%				\item Simple kernel
-				%	\item Monolithic kernel
-				%	\item Micro kernel
-				%	\item Exokernel
-					\item VMM, etc...
-			\end{itemize}	
-			
-			\includegraphics[width=1.\textwidth]{vmm-arch}		
-		\end{column}
-		
-		
-	\end{columns}
-	
+	\centering
+	\includegraphics[width=1.\textwidth]{unix-fs-3}
 	
 \end{frame}
 
 
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Linux architecture}
+	
+	\centering
+	\includegraphics[width=1.\textwidth]{linux-arch}
+	
+\end{frame}
 %-------------------------------------------------
 
 
