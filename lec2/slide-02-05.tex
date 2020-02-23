@@ -5,7 +5,7 @@
 %----------------------------------------------------------------------------------------
 
 \title[第1讲]{第2讲 ：OS Architecture \& Structure} % The short title appears at the bottom of every slide, the full title is only on the title page
-\subtitle{第四节：Micro kernel -- Mach \& L4 }
+\subtitle{第五节：Exokernel -- Xok+ExOS }
 \author{陈渝} % Your name
 \institute[清华大学] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
 {
@@ -35,35 +35,40 @@
 %\section{第一节：课程概述} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
 %%------------------------------------------------
 
+
 %-------------------------------------------------
 \begin{frame}[plain]
-	\frametitle{What is a Microkernel?}
+	\frametitle{Problem}
+	
+	\centering
+	\includegraphics[width=.9\textwidth]{exokernel-problem}
+	
+\end{frame}
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Insight}
 	
 	
 	
 	\begin{columns}
 		
-		\begin{column}{.4\textwidth}
+		\begin{column}{.5\textwidth}
 			
-			\includegraphics[width=1.\textwidth]{microkernel-arch}
+			\includegraphics[width=1.\textwidth]{exokernel-arch}
 			
 		\end{column}
 		
 		\begin{column}{.6\textwidth}
 			
-%			\Large
-		\begin{itemize}
-		\item Kernel with minimal features
-		\item Moves as much from the kernel into user space
+						\Large
 			\begin{itemize}
-				\item Address spaces
-				\item Interprocess communication (IPC)
-		 		\item Scheduling
+				\item Applications Know Better Than OS
+				\item Application demands vary widely
 
-		 	
 			\end{itemize}	
-		\end{itemize}	
-%			\includegraphics[width=1.\textwidth]{msdos}		
+			%			\includegraphics[width=1.\textwidth]{msdos}		
 		\end{column}
 		
 		
@@ -72,9 +77,10 @@
 \end{frame}
 
 
+
 %-------------------------------------------------
 \begin{frame}[plain]
-	\frametitle{What is a Microkernel?}
+	\frametitle{Ideas}
 	
 	
 	
@@ -82,7 +88,40 @@
 		
 		\begin{column}{.5\textwidth}
 			
-			\includegraphics[width=1.\textwidth]{minix3}
+			\includegraphics[width=1.\textwidth]{exokernel-example1}
+			
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+%			\Large
+			\begin{itemize}
+				\item Give un-trusted applications as much control over physical resources as possible
+				\item To force as few abstraction as possible on developers
+				\item separate protection from management
+				
+			\end{itemize}	
+			%			\includegraphics[width=1.\textwidth]{msdos}		
+		\end{column}
+		
+		
+	\end{columns}
+	
+\end{frame}
+
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Ideas}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.5\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{exokernel-example2}
 			
 		\end{column}
 		
@@ -90,28 +129,161 @@
 			
 			%			\Large
 			\begin{itemize}
-				\item Benefits
-
-				\begin{itemize}
-					\item Flexibility
-%					can implement competing versions of key OS features, like filesystem or paging, for best performance with applications.
-					\item Safety
-%					server malfunction restricted to that server (even drivers), not affecting rest of OS.
-					\item Modularity
-%					fewer interdepencies and a smaller trusted computing base (TCB).
-					
-				\end{itemize}	
-			
-				\item Detriments
-				\begin{itemize}
-					\item Address spaces
-					\item Interprocess communication (IPC)
-					\item Scheduling
-					
-					
-				\end{itemize}	
-		
+				\item Give un-trusted applications as much control over physical resources as possible
+				\item To force as few abstraction as possible on developers
+				\item separate protection from management
+				
 			\end{itemize}	
+			%			\includegraphics[width=1.\textwidth]{msdos}		
+		\end{column}
+		
+		
+	\end{columns}
+	
+\end{frame}
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Solution}
+	
+	\centering
+	\includegraphics[width=.9\textwidth]{exokernel-solution}
+	
+\end{frame}
+
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Challenges}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.5\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{exokernel-solution}
+			
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+						\Large
+			\begin{itemize}
+				\item Tracking ownership of resources
+				\item Ensuring resource protection
+				\item Revoking resource access
+				
+			\end{itemize}	
+			%			\includegraphics[width=1.\textwidth]{msdos}		
+		\end{column}
+		
+		
+	\end{columns}
+	
+\end{frame}
+%-------------------------------------------------
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Techniques}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.5\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{exokernel-solution}
+			
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+			\Large
+			\begin{itemize}
+				\item Secure binding
+				\item Visible revocation
+				\item Abort protocol
+				
+			\end{itemize}	
+			%			\includegraphics[width=1.\textwidth]{msdos}		
+		\end{column}
+		
+		
+	\end{columns}
+	
+\end{frame}
+
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Techniques -- secure binding}
+	
+	\Large
+	It is a protection mechanism that decouples authorization from actual use of a resource
+	
+	\begin{columns}
+		
+		\begin{column}{.5\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{exokernel-solution}
+			
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+		\large
+		\begin{itemize}
+		\item Secure binding techniques
+			\begin{itemize}
+				\item Hardware mechanism
+				\item Software caching
+				\item Downloading application code
+				
+			\end{itemize}	
+		\end{itemize}
+			%			\includegraphics[width=1.\textwidth]{msdos}		
+		\end{column}
+		
+		
+	\end{columns}
+	
+\end{frame}
+
+
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Techniques -- visible resource revocation}
+	
+   \Large
+	A way to reclaim resources and break their(application \& resources) secure binding
+	
+	\begin{columns}
+		
+		\begin{column}{.5\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{exokernel-solution}
+			
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+			\large
+			\begin{itemize}
+				\item An exokernel uses visible revocation for most resources
+				\begin{itemize}
+					\item traditional OS have performed revocation invisibly.
+
+					
+				\end{itemize}
+			\item dialogue between an exokernel and a library OS
+			\item library OS should organize resource lists
+			\end{itemize}
 			%			\includegraphics[width=1.\textwidth]{msdos}		
 		\end{column}
 		
@@ -123,50 +295,32 @@
 
 %-------------------------------------------------
 \begin{frame}[plain]
-	\frametitle{Microkernel-- Mach}
+	\frametitle{Techniques -- the abort protocol}
 	
-%Task: unit of execution consisting of an address space, ports, and threads.
-%Thread: basic unit of execution, shares address space, ports with other threads in task.
-%Port: communication channel used to send messages between tasks.  Tasks must have correct port rights to send message to a task.
-%Message: basic unit of communication consisting of a typed set of data objects.
-%Memory Object: source of memory tasks can map into their address space; includes files and pipes.	
+	\Large
+	If a library OS fails to respond quickly, the secure bindings need to be broken “by force”
 	
 	\begin{columns}
 		
-		\begin{column}{.4\textwidth}
-			\centering
-			\includegraphics[width=.3\textwidth]{Rick-Rashid}
-			\includegraphics[width=1.\textwidth]{mach-arch}
-%			Developed at CMU, Led by Rick Rashid, Initial release: 1985, Big impact (as we will see)
+		\begin{column}{.5\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{exokernel-solution}
+			
 		\end{column}
 		
-		\begin{column}{.6\textwidth}
+		\begin{column}{.5\textwidth}
 			
-			%			\Large
+			\large
 			\begin{itemize}
-				\item First generation microkernel -- Mach (led by Rick Rashid)
-				\item Task and thread management
+				\item The abort protocol
 				\begin{itemize}
-					\item Task (process) unit of allocation
-					\item Thread, unit of execution
-					\item CPU scheduling policies exposed to apps
-				\end{itemize}	
-				\item Interprocess communication (IPC)
-				\begin{itemize}
-					\item Between threads via ports
-					\item Secured by capabilities
-
-				\end{itemize}				
-				
-				\item Memory object management
-				\begin{itemize}
-					\item virtual memory
-					\item memory object
-					\item hierarchical pagers
+					\item An exokernel simply breaks all secure bindings to the resource and informs the library operating system
 					
-				\end{itemize}		
-			\end{itemize}	
-	
+					
+				\end{itemize}
+
+			\end{itemize}
+			%			\includegraphics[width=1.\textwidth]{msdos}		
 		\end{column}
 		
 		
@@ -175,33 +329,34 @@
 \end{frame}
 
 
+
 %-------------------------------------------------
 \begin{frame}[plain]
-	\frametitle{Microkernel-- Mach}
+	\frametitle{Techniques -- library OS}
 	
-	%Task: unit of execution consisting of an address space, ports, and threads.
-	%Thread: basic unit of execution, shares address space, ports with other threads in task.
-	%Port: communication channel used to send messages between tasks.  Tasks must have correct port rights to send message to a task.
-	%Message: basic unit of communication consisting of a typed set of data objects.
-	%Memory Object: source of memory tasks can map into their address space; includes files and pipes.	
+	\Large
+	Manage OS abstractions 	at application level
 	
 	\begin{columns}
 		
-		\begin{column}{.4\textwidth}
-			\centering
-			%			\includegraphics[width=.3\textwidth]{Rick-Rashid}
-			\includegraphics[width=1.\textwidth]{mach-arch}
-			%			Developed at CMU, Led by Rick Rashid, Initial release: 1985, Big impact (as we will see)
+		\begin{column}{.5\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{exokernel-solution}
+			
 		\end{column}
 		
-		\begin{column}{.6\textwidth}
+		\begin{column}{.5\textwidth}
 			
-			%			\Large
+			\large
 			\begin{itemize}
-				\item First generation microkernel -- Mach 
+				\item IPC Abstractions
+			
+				\item Application-level Virtual Memory
+					
+				\item Remote Communication
 				
-			\end{itemize}	
-			\includegraphics[width=1.\textwidth]{mach-abstract}	
+			\end{itemize}
+			%			\includegraphics[width=1.\textwidth]{msdos}		
 		\end{column}
 		
 		
@@ -209,40 +364,35 @@
 	
 \end{frame}
 
+
+
 %-------------------------------------------------
 \begin{frame}[plain]
-	\frametitle{Microkernel-- Mach}
+	\frametitle{Implementation}
 	
-	%Task: unit of execution consisting of an address space, ports, and threads.
-	%Thread: basic unit of execution, shares address space, ports with other threads in task.
-	%Port: communication channel used to send messages between tasks.  Tasks must have correct port rights to send message to a task.
-	%Message: basic unit of communication consisting of a typed set of data objects.
-	%Memory Object: source of memory tasks can map into their address space; includes files and pipes.	
+
 	
 	\begin{columns}
 		
-		\begin{column}{.4\textwidth}
-			\centering
-%			\includegraphics[width=.3\textwidth]{Rick-Rashid}
-			\includegraphics[width=1.\textwidth]{mach-arch}
-			%			Developed at CMU, Led by Rick Rashid, Initial release: 1985, Big impact (as we will see)
+		\begin{column}{.5\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{exokernel-solution}
+			
 		\end{column}
 		
-		\begin{column}{.6\textwidth}
+		\begin{column}{.5\textwidth}
 			
-			%			\Large
+			\large
 			\begin{itemize}
-				\item First generation microkernel -- Mach 
-				\item Performance
+				\item Prototype ( Xok / ExOS )
 				\begin{itemize}
-					\item the use of IPC for almost all tasks turned out to have serious performance impact. 
-					\item system calls take 5-6X as long as UNIX
-					\item  given a syscall that does nothing, a full round-trip under BSD would require about 40μs, whereas on a user-space Mach system it would take just under 500μs. 
-
-					\item benchmarks on 1997 hardware showed that Mach 3.0-based UNIX single-server implementations were about 50\% slower than native UNIX.
-				\end{itemize}		
-			\end{itemize}	
-			
+					\item Exokernel: Xok on x86, Aegis runs on DEC
+					\item Library OS: ExOS, fundamental OS abstractions at application level
+					
+				\end{itemize}
+				
+			\end{itemize}
+			%			\includegraphics[width=1.\textwidth]{msdos}		
 		\end{column}
 		
 		
@@ -252,57 +402,78 @@
 
 
 
-
 %-------------------------------------------------
 \begin{frame}[plain]
-	\frametitle{Microkernel-- L4}
-	
-	%Task: unit of execution consisting of an address space, ports, and threads.
-	%Thread: basic unit of execution, shares address space, ports with other threads in task.
-	%Port: communication channel used to send messages between tasks.  Tasks must have correct port rights to send message to a task.
-	%Message: basic unit of communication consisting of a typed set of data objects.
-	%Memory Object: source of memory tasks can map into their address space; includes files and pipes.	
-	
-	\begin{columns}
-		
-		\begin{column}{.4\textwidth}
-			\centering
-			\includegraphics[width=.3\textwidth]{l4-author}
-			\\
-			\includegraphics[width=1.\textwidth]{l4-perf}
-			%			Developed at CMU, Led by Rick Rashid, Initial release: 1985, Big impact (as we will see)
-		\end{column}
-		
-		\begin{column}{.6\textwidth}
-			
-			%			\Large
-			\begin{itemize}
-				\item Second generation microkernel -- L4 by Jochen Liedtke (GMD)
-				\item Performance
-				\begin{itemize}
-					\item synchronous IPCs  -->  async IPCs (like epoll in Linux)
-					\item smaller, Mach 3(330 KB) --> L4 (12KB)
-					\item IPC security checks moved to user process
-					\item IPC is hardware dependent
-				\end{itemize}		
-			\end{itemize}	
-			
-		\end{column}
-		
-		
-	\end{columns}
-	
-\end{frame}
-
-
-%-------------------------------------------------
-\begin{frame}[plain]
-	\frametitle{L4 family}
+	\frametitle{Performance}
 	
 	\centering
-	\includegraphics[width=1.\textwidth]{l4-family}
+	\includegraphics[width=.8\textwidth]{aegis-perf1}
 	
 \end{frame}
+
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Performance}
+	
+	\centering
+	\includegraphics[width=.8\textwidth]{aegis-perf2}
+	
+\end{frame}
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Performance}
+	
+	\centering
+	\includegraphics[width=.8\textwidth]{aegis-perf3}
+	
+\end{frame}
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Performance}
+	
+	\centering
+	\includegraphics[width=.8\textwidth]{aegis-perf4}
+	
+\end{frame}
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Performance}
+	
+	\centering
+	\includegraphics[width=.8\textwidth]{exos-perf1}
+	
+\end{frame}
+
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Performance}
+	
+	\centering
+	\includegraphics[width=.8\textwidth]{exos-perf2}
+	
+\end{frame}
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Performance}
+	
+	\centering
+	\includegraphics[width=.8\textwidth]{exos-perf3}
+	
+\end{frame}
+
+
 %-------------------------------------------------
 
 
