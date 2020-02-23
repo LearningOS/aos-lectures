@@ -1,0 +1,256 @@
+\input{../preamble}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[第1讲]{第2讲 ：OS Architecture \& Structure} % The short title appears at the bottom of every slide, the full title is only on the title page
+\subtitle{第一节：Overview }
+\author{陈渝} % Your name
+\institute[清华大学] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+	清华大学计算机系 \\ % Your institution for the title page
+	\medskip
+	\textit{yuchen@tsinghua.edu.cn} % Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+%\begin{frame}
+%\frametitle{提纲} % Table of contents slide, comment this block out to remove it
+%\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+%\end{frame}
+%
+%%----------------------------------------------------------------------------------------
+%%	PRESENTATION SLIDES
+%%----------------------------------------------------------------------------------------
+%
+%%------------------------------------------------
+%\section{第一节：课程概述} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
+%%------------------------------------------------
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Recap}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.4\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{os-position}
+			
+		\end{column}
+		
+		\begin{column}{.6\textwidth}
+			
+			\Large
+			Why OS Architecture \& Structure ?
+			\begin{itemize}
+				\item for user
+				\begin{itemize}\large
+					\item should be convenient to use, easy to learn, reliable, and fast，etc.
+				\end{itemize}
+				\item for system
+				\begin{itemize}\large
+					\item should be easy to design, implement, and maintain
+					\item flexible, reliable, error-free, and efficient
+				\end{itemize}
+			\end{itemize}	
+			
+%			\includegraphics[width=1.\textwidth]{msdos}		
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Recap}
+
+
+
+	\begin{columns}
+
+	\begin{column}{.5\textwidth}
+	
+	\includegraphics[width=1.\textwidth]{os-position}
+	
+	\end{column}
+
+	\begin{column}{.5\textwidth}
+	
+	\Large
+    OS Structure	
+	\begin{itemize}
+	\item Simple kernel
+%	\item Monolithic kernel
+%	\item Micro kernel
+%	\item Exokernel
+%	\item VMM, etc...
+	\end{itemize}	
+
+	\includegraphics[width=1.\textwidth]{msdos}		
+	\end{column}
+	
+
+\end{columns}
+
+
+\end{frame}
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Recap}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.5\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{os-position}
+			
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+			\Large
+			OS Structure	
+			\begin{itemize}
+%				\item Simple kernel
+					\item Monolithic kernel
+				%	\item Micro kernel
+				%	\item Exokernel
+				%	\item VMM, etc...
+			\end{itemize}	
+			
+			\includegraphics[width=1.\textwidth]{multi-level-os-arch}		
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Recap}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.5\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{os-position}
+			
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+			\Large
+			OS Structure	
+			\begin{itemize}
+%				\item Simple kernel
+				%	\item Monolithic kernel
+					\item Micro kernel
+				%	\item Exokernel
+				%	\item VMM, etc...
+			\end{itemize}	
+			
+			\includegraphics[width=1.\textwidth]{microkernel-arch}		
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Recap}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.5\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{os-position}
+			
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+			\Large
+			OS Structure	
+			\begin{itemize}
+%				\item Simple kernel
+				%	\item Monolithic kernel
+				%	\item Micro kernel
+					\item Exokernel
+				%	\item VMM, etc...
+			\end{itemize}	
+			
+			\includegraphics[width=1.\textwidth]{exokernel-arch}		
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Recap}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.5\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{os-position}
+			
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+			\Large
+			OS Structure	
+			\begin{itemize}
+%				\item Simple kernel
+				%	\item Monolithic kernel
+				%	\item Micro kernel
+				%	\item Exokernel
+					\item VMM, etc...
+			\end{itemize}	
+			
+			\includegraphics[width=1.\textwidth]{vmm-arch}		
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+
+%-------------------------------------------------
+
+
+\end{document}
