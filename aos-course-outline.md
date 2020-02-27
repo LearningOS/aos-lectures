@@ -13,21 +13,18 @@
 
 ## Tendency of OS -- Correctness
 
-## Summary
 
 # Lec 2 OS Architecture
 
-## History of OS Architecture -- THE
+## Oeverview
+
+## History 
 
 ## Monolithic Kernel -- UNIX
 
-## Micro Kernel -- L4
+## MicroKernel -- Mach&L4
 
-## ExoKernel 
-
-## Extensible Kernel
-
-## Summary
+## ExoKernel --  Xok+ExOS
 
 # Lec3+4  System Virtualization Overview
 
