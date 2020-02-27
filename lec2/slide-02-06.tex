@@ -1,0 +1,313 @@
+\input{../preamble}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[第1讲]{第2讲 ：OS Architecture \& Structure} % The short title appears at the bottom of every slide, the full title is only on the title page
+\subtitle{第六节：dependable kernel -- singularity }
+% dependability  可信 
+\author{陈渝} % Your name
+\institute[清华大学] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+	清华大学计算机系 \\ % Your institution for the title page
+	\medskip
+	\textit{yuchen@tsinghua.edu.cn} % Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+%\begin{frame}
+%\frametitle{提纲} % Table of contents slide, comment this block out to remove it
+%\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+%\end{frame}
+%
+%%----------------------------------------------------------------------------------------
+%%	PRESENTATION SLIDES
+%%----------------------------------------------------------------------------------------
+%
+%%------------------------------------------------
+%\section{第一节：课程概述} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
+%%------------------------------------------------
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{shortcomings of contemporary OS}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.5\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{os-position}
+			
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+			%			\Large
+			\begin{itemize}
+				\item wide-spread security vulnerabilities
+				\item unexpected interactions among applications
+				\item failures caused by errant extensions, plug-ins, and drivers
+
+			\end{itemize}	
+			%			\includegraphics[width=1.\textwidth]{msdos}		
+		\end{column}
+		
+		
+	\end{columns}
+	\pause
+\begin{block}{history}
+	This commonality is not entirely accidental, as these systems are all
+	rooted in OS architectures and development tools of the late 1060's and early 1970's. 
+\end{block}
+
+\end{frame}
+
+
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Basic ideas or Philosophy}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.5\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{os-position}
+			
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+			%			\Large
+			\begin{itemize}
+				\item Use software to provide safe, uniform extensibility
+				\item Detect errors early (design or compile time, not execution or
+				crash time)
+				
+				\item Don’t use any hardware protection. Everything runs in Ring0, single address space
+				
+				
+				
+			\end{itemize}	
+			%			\includegraphics[width=1.\textwidth]{msdos}		
+		\end{column}
+		
+		
+	\end{columns}
+%	\pause
+	\begin{block}{\underline{history}}
+		This commonality is not entirely accidental, as these systems are all
+		rooted in OS architectures and development tools of the late 1060's and early 1970's. 
+	\end{block}
+	
+\end{frame}
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Ideas}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.5\textwidth}
+			
+			\includegraphics[width=.8\textwidth]{singularity-arch}
+			
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+			%			\Large
+			\begin{itemize}
+				\item pervasive use of safe programming languages
+				\item sound program verification tools
+				\item improved system architecture
+				
+			\end{itemize}	
+			\centering
+			\includegraphics[width=.6\textwidth]{singularity-overview}
+		\end{column}
+		
+		
+	\end{columns}
+	
+
+\end{frame}
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Ideas}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.5\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{singularity-sip}
+			
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+			%			\Large
+			\begin{itemize}
+				\item pervasive use of safe programming languages
+				\item sound program verification tools
+				\item improved system architecture
+				
+			\end{itemize}	
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Ideas}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.5\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{singularity-sip}
+			
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+			%			\Large
+			\begin{itemize}
+				\item Safe micro-kernel
+					\begin{itemize}
+						\item  95\% written in C\# (Sing\#)
+						\item  Sing\# == C\# + channel support + additional safety
+						\item 17\% of files contain unsafe C\#						
+						\item 5\% of files contain x86 asm or C++
+						\item  code delivered to the system as compiled Microsoft
+						Intermediate Language (MSIL) binaries.
+						
+						
+					\end{itemize}
+				
+					\item Software isolated processes (SIPs)
+					
+					\begin{itemize}
+					\item  all user code is verifiably safe
+					\item  some unsafe code in trusted runtime
+					\item processes and kernel sealed at start time
+					
+				    \end{itemize} 
+
+%					\item Communication via contract-based channels
+%
+%					\begin{itemize}
+%						\item  channel behavior is specified and checked
+%						\item fast and efficient communication
+%						
+%					\end{itemize} 
+%			    
+			    
+			    
+			\end{itemize}	
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Ideas}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.5\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{singularity-channel}
+			
+			\includegraphics[width=.3\textwidth]{blank}
+						
+			\includegraphics[width=1.\textwidth]{singularity-manifest}
+			
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+			%			\Large
+			\begin{itemize}
+				
+				\item Communication via contract-based channels
+				
+				\begin{itemize}
+					\item  channel behavior is specified and checked
+					\item fast and efficient communication
+					
+				\end{itemize} 
+				
+				
+				\item  Manifest-Based Programs
+				
+				\begin{itemize}
+					\item  Manifest is a machine-checkable,
+					declarative expression of the MBP's expected behavior. 
+					\item  Every component in Singularity is described by a manifest,
+					including the kernel, device drivers, and user applications. 
+				\end{itemize} 
+				
+			\end{itemize}	
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Performance}
+	
+	\centering
+	\includegraphics[width=.8\textwidth]{singularity-perf}
+	
+\end{frame}
+
+%-------------------------------------------------
+
+
+\end{document}
