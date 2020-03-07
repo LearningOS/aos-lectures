@@ -410,22 +410,23 @@
 		
 		\begin{column}{.4\textwidth}
 			\centering
-			\includegraphics[width=1.\textwidth]{vmm-do-work}
+			\includegraphics[width=1.\textwidth]{shadow-page-table}
 			
 		\end{column}
 		
 		\begin{column}{.6\textwidth}
 			
+			\includegraphics[width=1.\textwidth]{gpt-ept-spt}
 			 How does the virtual machine monitor get involved with a
 			hardware-managed TLB?	
 			
-			\begin{itemize}
-				\item VMM doesn't have a chance to run on each TLB miss to sneak its translation into the system. 
-				\item VMM must closely monitor changes	the OS makes to each page table
-				\item VMM must keep a \textbf{shadow page table} that maps the virtual addresses of each process to the VMM's desired machine pages
-				\item VMM installs a process's \textbf{shadow page table }whenever the OS tries to install the process's	OS-level page table
-				
-			\end{itemize} 
+%			\begin{itemize}
+%				\item VMM doesn't have a chance to run on each TLB miss to sneak its translation into the system. 
+%				\item VMM must closely monitor changes	the OS makes to each page table
+%				\item VMM must keep a \textbf{shadow page table} that maps the virtual addresses of each process to the VMM's desired machine pages
+%				\item VMM installs a process's \textbf{shadow page table }whenever the OS tries to install the process's	OS-level page table
+%				
+%			\end{itemize} 
 
 			
 			
@@ -448,8 +449,8 @@
 		
 		\begin{column}{.4\textwidth}
 			\centering
-			\includegraphics[width=1.\textwidth]{vmm-do-work}
-			
+			\includegraphics[width=.6\textwidth]{vmm-do-work}
+			\includegraphics[width=.6\textwidth]{shadow-page-table}
 		\end{column}
 		
 		\begin{column}{.6\textwidth}
