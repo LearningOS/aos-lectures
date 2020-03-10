@@ -26,6 +26,7 @@
 
 ## ExoKernel --  Xok+ExOS
 
+
 # Lec3+4  System Virtualization Overview
 
 ## Introduction
@@ -38,9 +39,10 @@
 
 ## Virtualization Technologies -I/O
 
-## Some VMMs
+## Optimization of VMM -- intro
+## LightVM: My VM is Lighter (and Safer) than your Container 
+## Dune: Safe User-level Access to Privileged CPU Features
 
-## Summary
 
 # Lec5+6  OS/System API/Interface
 
@@ -49,8 +51,6 @@
 ## Rethinking the Library OS from the Top Down
 
 ## DPDK: Accelerating the I/O Path 
-
-## Dune: Safe User-level Access to Privileged CPU Features
 
 ## Safe and Secure Drivers in High-Level Languages
 
