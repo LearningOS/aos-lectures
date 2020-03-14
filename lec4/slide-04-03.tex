@@ -102,7 +102,7 @@
 	\item Speed	 up	 garbage	 collection	 (Azul	 C4)	
 	
 	pagetable
-    \item Privilege separaAon	 within	 a	 process	 (Palladium)
+    \item Privilege separation	 within	 a	 process	 (Palladium)
     
     MMU	
 	\item Safe	 native code	 in	 web	 browsers	 (Xax) 
@@ -132,7 +132,7 @@
  concerns,	
  challenging	
  to	
-  OpAmizaAon	
+  Optimization	
  analysis
 			distribute,	
  composability	
@@ -496,15 +496,14 @@
 			\begin{itemize}
 				\item  gives user programs the ability to manually
 				control TLB invalidations.
-				\item page table updates
-				can be performed in batches when permitted by the application. 
-				\item Dune exposes TLB tagging by providing access to Intel’s recently added process-context identifier (PCID) feature
-				\item Dune results in a 7× speedup		over Linux in the Appel and Li user-level virtual memory		benchmarks 
+				\item page table updates can be performed in batches when permitted by the application. 
+				\item Dune exposes TLB tagging by providing access to Intel's recently added process-context identifier (PCID) or virtual-processor identifiers (VPID) feature
+				\item Dune results in a 7× speedup	over Linux in the Appel and Li user-level virtual memory	benchmarks 
 				
 			\end{itemize}					
 			
 		\end{column}
-		Uses	 Intel VT‐x		
+			
 		
 	\end{columns}
 	
@@ -547,7 +546,7 @@
 				\item  Two motivating use cases for
 				privilege modes are privilege separation and sandboxing
 				of untrusted code.
-				can be performed in batches when permitted by the application. 
+				\item  page table updates can be performed in batches when permitted by the application. 
 				\item system
 				call instructions trap to the process itself, rather than to
 				the kernel,
@@ -577,9 +576,27 @@
 	\includegraphics[width=.7\textwidth]{dune-hw-syscall}
 	
 	\begin{itemize}
-		\item  SYSCALL	 will	 only	 trap	 back	 into	 the	 process	  
+		\item  SYSCALL	
+ will	
+ only	
+ trap	
+ back	
+ into	
+ the	
+ process	
+  
 		
-		\item Use	 VMCALL	 (i.e.	 a	 hypercall)	 to	 perform	normal	 kernel	 system	 calls	 
+		\item Use	
+ VMCALL	
+ (i.e.	
+ a	
+ hypercall)	
+ to	
+ perform	normal	
+ kernel	
+ system	
+ calls	
+ 
 		
 	\end{itemize}	
 	
@@ -596,10 +613,36 @@
 	\includegraphics[width=.7\textwidth]{dune-hw-syscall-useful}
 	
 	\begin{itemize}
-		\item  Isolate	 untrusted	 code	 by	 running	 it	 in	 a	 less	privileged	 mode	 (i.e.	 ring	 3	 on	 x86)	 
+		\item  Isolate	
+ untrusted	
+ code	
+ by	
+ running	
+ it	
+ in	
+ a	
+ less	privileged	
+ mode	
+ (i.e.	
+ ring	
+ 3	
+ on	
+ x86)	 
 		
-		\item Leverage	 the	 ‘supervisor’	 bit	 in	 the	 page	 table	  	to	 protect	 memory	  
-			 
+		\item Leverage	
+ the	
+ ‘supervisor’	
+ bit	
+ in	
+ the	
+ page	
+ table	
+  	to	
+ protect	
+ memory	
+  
+			
+ 
 		
 	\end{itemize}	
 	
@@ -760,12 +803,24 @@
 %-------------------------------------------------
 \begin{frame}[plain]
 	\frametitle{ Performance}
-	Sandbox:	Lighttpd	 performance	  
+	Sandbox:	Lighttpd	
+ performance	
+  
 	
 	
 	\includegraphics[width=.8\textwidth]{bench-sandbox-lighttpd}
 	
-	 Slight	 reduction	 in	 throughput	 (less	 than	 2\%)	 due	 to	VMCALL	 overhead	  
+	 Slight	
+ reduction	
+ in	
+ throughput	
+ (less	
+ than	
+ 2\%)	
+ due	
+ to	VMCALL	
+ overhead	
+  
 	
 	
 	
@@ -792,8 +847,20 @@
 			\begin{itemize}
 				\item Applications	 can	 benefit	 from	 access	 to	 privileged	CPU	 features		
 				\item Virtualization	 hardware	 allows	 us	 to	 provide	 such	access	 safely	
-				\item Dune	 creates	 new	 opportunities	 to	 build	 and	  
-				improve	 applications	 without	 kernel	 changes	 
+				\item Dune	
+ creates	
+ new	
+ opportunities	
+ to	
+ build	
+ and	
+  
+				improve	
+ applications	
+ without	
+ kernel	
+ changes	
+ 
 				\item Dune	 has	 modest	 performance	 overhead				
 			\end{itemize}
 		\end{column}
