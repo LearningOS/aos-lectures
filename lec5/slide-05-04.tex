@@ -159,7 +159,7 @@
 		\end{column}
 		
 		\begin{column}{.6\textwidth}
-			\Large
+			\large
 			\begin{block}{Moral 3: Specification, Andrew Morton}
 				Programming is not just an act of telling a computer
 				what to do: it is also an act of telling other
@@ -175,7 +175,7 @@
 				\item timeout is NULL
 				\item timeout points to {0, 0}
 				\item timeout points to a structure which is nonzero. 
-				\item If, while blocking, the call is interrupted by a signal handler,
+				\item If, while blocking, the call is interrupted by a signal handler.
 %				,then
 %				if 1 or more datagrams have been received, then those datagrams
 %				are returned (and interruption by a signal handler is not (directly)
@@ -184,7 +184,6 @@
 %				the error EINTR.
 %				Man pages as a test specification
 
-				Specification, Andrew Morton
 			\end{itemize}
 		\end{column}
 		
@@ -311,8 +310,8 @@
 
 			\item Undefined arguments and flags must be zero. 
 			\item Syscalls with timeouts should allow absolute timeouts 
-			\item Avoid extending multiplexor system calls
-			\item etc.
+			\item Avoid extending multiplexor system calls, etc.
+
 		    \end{itemize}
 			\end{block} 
 			
