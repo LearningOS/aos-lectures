@@ -26,6 +26,7 @@
 
 ## ExoKernel --  Xok+ExOS
 
+
 # Lec3+4  System Virtualization Overview
 
 ## Introduction
@@ -38,9 +39,10 @@
 
 ## Virtualization Technologies -I/O
 
-## Some VMMs
+## Optimization of VMM -- intro
+## LightVM: My VM is Lighter (and Safer) than your Container 
+## Dune: Safe User-level Access to Privileged CPU Features
 
-## Summary
 
 # Lec5+6  OS/System API/Interface
 
@@ -50,11 +52,19 @@
 
 ## DPDK: Accelerating the I/O Path 
 
-## Dune: Safe User-level Access to Privileged CPU Features
-
 ## Safe and Secure Drivers in High-Level Languages
 
-# Lec7+8 OS for MultiCore Architecture
+
+# Lec 7+8 OS Kernel and HLL
+
+## Introduction
+
+## Multiprogramming a 64 kB Computer Safely and Efficiently
+
+## The benefits and costs of writing a POSIX kernel in a high-level language
+
+
+# Lec9+10 OS for MultiCore Architecture
 
 ## Introduction
 
@@ -66,7 +76,7 @@
 
 ## Scalable Kernel TCP Design and Implementation for Short-Lived Connections
 
-# Lec 9+10 OS/System Security
+# Lec 11+12 OS/System Security
 
 ## Introduction
 
@@ -76,7 +86,7 @@
 
 ## RID: Finding Reference Count Bugs with Inconsistent Path Pair Checking
 
-# Lec 11+12 Correctness: OS/System Verification
+# Lec 13+14 Correctness: OS/System Verification
 
 ## Introduction
 
@@ -86,12 +96,5 @@
 
 ## **Hyperkernel: Push-Button Verification of an OS Kernel.** 
 
-# Lec 13+14 OS Kernel and HLL
-
-## Introduction
-
-## Multiprogramming a 64 kB Computer Safely and Efficiently
-
-## The benefits and costs of writing a POSIX kernel in a high-level language
 
 # Lec 15+16 Invited Talks From Visitors & Students
