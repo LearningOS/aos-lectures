@@ -1,0 +1,278 @@
+\input{../preamble}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[第5讲]{第5讲 ：The Interface of OS} % The short title appears at the bottom of every slide, the full title is only on the title page
+\subtitle{第五节：Interface for Performance}
+\author{陈渝} % Your name
+\institute[清华大学] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+	清华大学计算机系 \\ % Your institution for the title page
+	\medskip
+	\textit{yuchen@tsinghua.edu.cn} % Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+%\begin{frame}
+%\frametitle{提纲} % Table of contents slide, comment this block out to remove it
+%\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+%\end{frame}
+%
+%%----------------------------------------------------------------------------------------
+%%	PRESENTATION SLIDES
+%%----------------------------------------------------------------------------------------
+%
+%%------------------------------------------------
+%\section{第一节：课程概述} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
+%%------------------------------------------------
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction}
+	
+	
+	\begin{columns}
+	
+	\begin{column}{.3\textwidth}	
+
+%			\centering
+			\includegraphics[width=1.\textwidth]{flexsc}
+
+
+		\end{column}
+
+\begin{column}{.3\textwidth}
+	
+	\includegraphics[width=1.\textwidth]{megapipe}
+\end{column}
+
+
+
+\begin{column}{.3\textwidth}	
+		\includegraphics[width=1.\textwidth]{commuter}
+\end{column}
+
+\end{columns}
+
+Reference: \\
+\tiny Flexsc: Flexible System Call Scheduling with Exception-Less System Calls,OSDI 2010 \\
+\tiny MegaPipe: A New Programming Interface for Scalable Network I/O, OSDI 2012 \\
+\tiny The Scalable Commutativity Rule: Designing Scalable Software for Multicore Processors, SOSP 2013.  
+
+
+\end{frame}	
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction}
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.3\textwidth}	
+			
+			%			\centering
+			\includegraphics[width=1.\textwidth]{flexsc}
+			
+			
+		\end{column}
+		
+		\begin{column}{.3\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{megapipe}
+		\end{column}
+		
+		
+		
+		\begin{column}{.3\textwidth}	
+			\includegraphics[width=1.\textwidth]{commuter}
+		\end{column}
+		
+	\end{columns}
+	
+%	\centering
+	Improve performance: 
+	\begin{itemize}
+		\item synchronmous syscall is a legacy
+		\item syscall is not for high-speed net
+		\item syscall is not for multicore arch
+	\end{itemize}
+	
+	
+\end{frame}	
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- FlexSC}
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.3\textwidth}	
+			
+			%			\centering
+			\includegraphics[width=1.\textwidth]{flexsc}
+			
+			
+		\end{column}
+		
+		\begin{column}{.7\textwidth}
+		\includegraphics[width=1.\textwidth]{flexsc-motivation}
+		\end{column}
+		
+	\end{columns}
+	
+	
+\end{frame}	
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- FlexSC}
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.3\textwidth}	
+			
+			%			\centering
+			\includegraphics[width=1.\textwidth]{flexsc}
+			
+			
+		\end{column}
+		
+		\begin{column}{.7\textwidth}
+			\includegraphics[width=1.\textwidth]{flexsc-slow-sync-syscall}
+		\end{column}
+		
+	\end{columns}
+	
+	
+\end{frame}	
+
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- FlexSC}
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.4\textwidth}	
+			
+			%			\centering
+%			\includegraphics[width=1.\textwidth]{flexsc}
+			\includegraphics[width=1.\textwidth]{flexsc-slow-sync-syscall}
+			
+		\end{column}
+		
+		\begin{column}{.6\textwidth}
+			
+		Key source of performance impact
+		\begin{itemize}
+			\item  Traditional system calls are synchronous
+			and use exceptions to cross domains
+			
+			\item Kernel performance equally affected.
+Processor efficiency for OS code is also cut
+in half			
+			\item On a Linux write() call:
+			up to 2/3
+			of the L1 data cache and data
+			TLB are evicted
+			
+
+			
+		\end{itemize}
+	
+		\end{column}
+		
+	\end{columns}
+	
+	
+\end{frame}	
+
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- FlexSC}
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.4\textwidth}	
+			
+			%			\centering
+			%			\includegraphics[width=1.\textwidth]{flexsc}
+			\includegraphics[width=1.\textwidth]{flexsc-arch}
+			
+		\end{column}
+		
+		\begin{column}{.6\textwidth}
+			
+			Exception-less syscalls
+			\begin{itemize}
+				\item  Remove synchronicity
+				by decoupling invocation from execution
+				
+				
+				\item Allow for batching, reduce indirect costs, fewer mode switches
+				
+				
+				
+				\item Allow for dynamic multicore specialization
+				
+				
+				
+			\end{itemize}
+			
+		\end{column}
+		
+	\end{columns}
+	
+	
+\end{frame}	
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- FlexSC}
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.4\textwidth}	
+			
+			%			\centering
+			%			\includegraphics[width=1.\textwidth]{flexsc}
+			\includegraphics[width=1.\textwidth]{flexsc-arch}
+			
+		\end{column}
+		
+		\begin{column}{.6\textwidth}
+			\includegraphics[width=1.\textwidth]{flexsc-perf}
+
+
+			
+		\end{column}
+		
+	\end{columns}
+
+			\LARGE Contributions: Exception-less syscalls  \& FlexSC-Threads	
+	
+\end{frame}	
+%-------------------------------------------------
+
+%-------------------------------------------------
+\end{document}

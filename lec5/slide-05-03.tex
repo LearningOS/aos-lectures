@@ -1,0 +1,195 @@
+\input{../preamble}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[第5讲]{第5讲 ：The Interface of OS} % The short title appears at the bottom of every slide, the full title is only on the title page
+\subtitle{第三节：POSIX in modern OS}
+\author{陈渝} % Your name
+\institute[清华大学] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+	清华大学计算机系 \\ % Your institution for the title page
+	\medskip
+	\textit{yuchen@tsinghua.edu.cn} % Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+%\begin{frame}
+%\frametitle{提纲} % Table of contents slide, comment this block out to remove it
+%\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+%\end{frame}
+%
+%%----------------------------------------------------------------------------------------
+%%	PRESENTATION SLIDES
+%%----------------------------------------------------------------------------------------
+%
+%%------------------------------------------------
+%\section{第一节：课程概述} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
+%%------------------------------------------------
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction}
+	
+	
+	\begin{columns}
+	
+	\begin{column}{.4\textwidth}	
+
+			\centering
+			\includegraphics[width=1.\textwidth]{posix-in-modernos}
+
+
+		\end{column}
+
+
+
+\begin{column}{.6\textwidth}	
+	\large
+			Goals
+			\begin{itemize}\normalsize
+				\item Study the evolution of abstractions in modern OSes
+				\item Understand how modern workloads use traditional abstractions
+				\item  Identify the needs of modern applications
+			\end{itemize}
+		
+			\large
+			Questions
+			\begin{itemize}\normalsize
+				\item Which POSIX abstractions are unpopular for modern apps?
+				\item  Which POSIX abstractions are popular for modern apps?				
+				\item  Is POSIX missing any functionality?
+				
+			\end{itemize}
+			
+			\tiny POSIX Abstractions in Modern Operating
+			Systems: The Old, the New, and the Missing, Vaggelis Atlidakis, etc., EuroSYs, 2016
+			\\
+			https://columbia.github.io/libtrack/
+		\end{column}
+
+
+\end{columns}
+
+	
+\end{frame}	
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- Workloads \& Methodology}
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.3\textwidth}	
+			
+			\centering
+			\includegraphics[width=1.\textwidth]{ios-android}
+			\includegraphics[width=1.\textwidth]{ubuntu}
+			
+		\end{column}
+		
+		
+		
+		\begin{column}{.7\textwidth}	
+			\large
+			Three Modern OSes
+			
+			\begin{itemize}\normalsize
+				\item  Android 4.3, Ubuntu 12.04 , and OSX 10.10
+			\end{itemize}
+			
+			\large
+			Client-side Apps
+			\begin{itemize}\normalsize
+				\item   Facebook, Twitter, Skype, Chrome, Safari
+				
+			\end{itemize}			
+			
+			\large
+			Common User Workloads
+			
+			\begin{itemize}\normalsize
+				\item   e.g., post update, tweet, video call, browse
+	
+			\end{itemize}				
+
+             Static \& Dynamic   Measurements
+             
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{Study Questions}
+	\centering
+	\includegraphics[width=1.\textwidth]{studyq1}
+	
+	Large numbers of unused or unimplemented abstractions,
+	Departure from traditional IPC and async I/O
+	
+	
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{Study Questions}
+	\centering
+	\includegraphics[width=1.\textwidth]{studyq2}
+	
+	IOCTL: Extension API used to shortcut POSIX; Directly interact with the kernel; Build functionality not expressed from POSIX APIs
+	
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{Study Questions}
+	\Large
+	\textbf{Q3: Is POSIX missing any functionality?}
+	
+	\begin{itemize}\normalsize
+		\item POSIX omits graphics abstractions
+		
+		\item OpenGL cross-platform API used by applications
+						
+		\item No standard interface to GPUs but ioctl
+		\item Binder IPC is a central abstraction in Android
+		\item Similar patterns in other OSes (MACH IPC, D-Bus)
+		\item GUI apps require low-latency UI threads
+		
+	\end{itemize}
+	\centering
+	\includegraphics[width=.35\textwidth]{ipc-perf}
+	
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{Evolution of systems and applications}
+
+	\centering
+	\includegraphics[width=1.\textwidth]{evolution-of-system}
+	
+\end{frame}
+%-------------------------------------------------
+
+%-------------------------------------------------
+\end{document}
