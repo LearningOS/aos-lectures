@@ -274,5 +274,467 @@ in half
 \end{frame}	
 %-------------------------------------------------
 
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- MegaPipe}
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.5\textwidth}	
+			
+			%			\centering
+			%			\includegraphics[width=1.\textwidth]{flexsc}
+			\includegraphics[width=.8\textwidth]{megapipe-bad-small-msg}
+			\includegraphics[width=.8\textwidth]{megapipe-bad-short-conn}
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			\includegraphics[width=.8\textwidth]{megapipe-bad-multicore}
+			BSD	Socket	 API	 Performance	 Issues
+			\includegraphics[width=1.\textwidth]{megapipe-problem}
+			
+			
+		\end{column}
+		
+	\end{columns}
+	
+	
+	
+\end{frame}	
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- MegaPipe}
+			
+
+			BSD	Socket	 API	 Performance	 Issues
+\includegraphics[width=1.\textwidth]{megapipe-problem}			
+			Issues	with	 message-­‐oriented	 workloads
+			\begin{itemize}
+				\item  System	call	 overhead
+				
+				
+				\item Shared	listening	 socket
+				
+				
+				
+				\item  File	abstraction	 overhead
+				
+			\end{itemize}
+	
+	
+\end{frame}	
+
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- MegaPipe}
+	\centering
+	\includegraphics[width=.6\textwidth]{megapipe-method}			
+
+	
+	
+\end{frame}	
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- MegaPipe}
+
+	\begin{columns}
+	
+	\begin{column}{.5\textwidth}	
+
+		\includegraphics[width=.8\textwidth]{megapipe-share}
+
+	\end{column}
+	
+	\begin{column}{.5\textwidth}
+		\includegraphics[width=1.\textwidth]{megapipe-noshare}
+		
+		
+	\end{column}
+	
+\end{columns}
+	
+\end{frame}	
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- MegaPipe}
+	\Large Completion Notification	 Model
+	\centering
+	\includegraphics[width=.7\textwidth]{megapipe-completion-model}			
+	
+\end{frame}	
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- MegaPipe}
+	\Large Multi‐core scalability (\#	of	 transactions)	
+
+	\centering
+	\includegraphics[width=.8\textwidth]{megapipe-bench-multicore}	
+			
+	\normalsize
+	Key	abstraction:	 per-­‐core	 channel	\\
+ 	Enabling 3 optimizations: 
+ 	Batching,	 partitioning,	 lwsocket	  
+ 	
+
+\end{frame}	
+
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- Commuter}
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.3\textwidth}	
+			
+			%			\centering
+			\includegraphics[width=1.\textwidth]{commuter}
+			\includegraphics[width=1.\textwidth]{commuter-good}
+			
+		\end{column}
+		
+		\begin{column}{.7\textwidth}
+		
+		\LARGE
+		\begin{block}{ scalable software development}
+			The real bottlenecks may be in the interface design
+			
+		\end{block}
+		\centering
+		\includegraphics[width=.6\textwidth]{commuter-problem}
+		\includegraphics[width=.6\textwidth]{commuter-problem2}	
+		\end{column}
+		
+	\end{columns}
+	
+	
+\end{frame}	
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- Commuter}
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.3\textwidth}	
+			
+			%			\centering
+			\includegraphics[width=1.\textwidth]{commuter}
+			\includegraphics[width=1.\textwidth]{commuter-good}
+			
+		\end{column}
+		
+		\begin{column}{.7\textwidth}
+			
+			\LARGE
+			\begin{block}{The scalable commutativity rule}
+				Whenever interface operations commute,
+				they can be implemented in a way that scales.
+				
+				
+			\end{block}
+			\centering
+			\includegraphics[width=.8\textwidth]{commuter-rule-example}
+
+		\end{column}
+		
+	\end{columns}
+	
+	
+\end{frame}	
+
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- Commuter}
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.3\textwidth}	
+			
+			%			\centering
+			\includegraphics[width=1.\textwidth]{commuter}
+			\includegraphics[width=1.\textwidth]{commuter-good}
+			
+		\end{column}
+		
+		\begin{column}{.7\textwidth}
+			
+			
+			\begin{block}{The scalable commutativity rule}
+				Whenever interface operations commute,
+				they can be implemented in a way that scales.
+				
+				
+			\end{block}
+			The rule enables reasoning about scalability
+			throughout the software design process
+			
+			
+			\begin{itemize}
+				\item  Design:			Guides design of scalable interfaces
+				
+				
+				
+				\item Implement:				Sets a clear implementation target
+				
+				
+				
+				
+				\item  Test:				Systematic, workload-independent scalability testing
+				
+				
+			\end{itemize}
+
+			
+		\end{column}
+		
+	\end{columns}
+	
+	
+\end{frame}	
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- Commuter}
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.3\textwidth}	
+			
+			%			\centering
+			\includegraphics[width=1.\textwidth]{commuter}
+			\includegraphics[width=1.\textwidth]{commuter-good}
+			
+		\end{column}
+		
+		\begin{column}{.7\textwidth}
+			
+			
+			\begin{block}{The scalable commutativity rule}
+			Commutativity	is sensitive to
+			operations,arguments, and	state
+			
+			\end{block}
+		    \Large 
+		    Formalizing the rule
+		    
+			\includegraphics[width=1.\textwidth]{commuter-formalize}
+			
+		\end{column}
+		
+	\end{columns}
+	
+	
+\end{frame}	
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- Commuter}
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.3\textwidth}	
+			
+			%			\centering
+			\includegraphics[width=1.\textwidth]{commuter}
+			\includegraphics[width=1.\textwidth]{commuter-good}
+			
+		\end{column}
+		
+		\begin{column}{.7\textwidth}
+			
+			
+			\begin{block}{The scalable commutativity rule}
+				Commutativity	is sensitive to
+				operations,arguments, and	state
+				
+			\end{block}
+			\centering
+			
+			\includegraphics[width=.65\textwidth]{commuter-example-creat}
+			
+		\end{column}
+		
+	\end{columns}
+	
+	
+\end{frame}	
+
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- Commuter}
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.3\textwidth}	
+			
+			%			\centering
+			\includegraphics[width=.8\textwidth]{commuter-testing}
+
+			
+		\end{column}
+		
+		\begin{column}{.7\textwidth}
+
+			\centering
+			
+			\includegraphics[width=.9\textwidth]{commuter-symbolic-model}
+			
+		\end{column}
+		
+	\end{columns}
+	
+	
+\end{frame}	
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- Commuter}
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.3\textwidth}	
+			
+			%			\centering
+			\includegraphics[width=.8\textwidth]{commuter-testing}
+			
+			
+		\end{column}
+		
+		\begin{column}{.7\textwidth}
+			 Using the rules to build the scalable OS
+			\centering
+			
+			\includegraphics[width=.8\textwidth]{commuter-test-rename}
+			
+		\end{column}
+		
+	\end{columns}
+	
+	
+\end{frame}	
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- Commuter}
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.3\textwidth}	
+			
+			%			\centering
+			\includegraphics[width=.8\textwidth]{commuter-testing}
+			
+			
+		\end{column}
+		
+		\begin{column}{.7\textwidth}
+			Using the rules to build the scalable OS
+			\centering
+			
+			\includegraphics[width=.8\textwidth]{commuter-test-linux}
+			
+		\end{column}
+		
+	\end{columns}
+	
+	
+\end{frame}	
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- Commuter}
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.3\textwidth}	
+			
+			%			\centering
+			\includegraphics[width=.8\textwidth]{commuter-testing}
+			
+			
+		\end{column}
+		
+		\begin{column}{.7\textwidth}
+			Using the rules to build the scalable OS
+			\centering
+			
+			\includegraphics[width=.8\textwidth]{commuter-test-sv6}
+			
+		\end{column}
+		
+	\end{columns}
+	
+	
+\end{frame}	
+
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- Commuter}
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.3\textwidth}	
+			
+			%			\centering
+			\includegraphics[width=1.\textwidth]{commuter}
+			\includegraphics[width=1.\textwidth]{commuter-good}
+			
+		\end{column}
+		
+		\begin{column}{.7\textwidth}
+			
+			\Large
+			\begin{block}{Refining POSIX with the rule}
+				\begin{itemize}
+				\item Lowest FD versus any FD
+				\item stat versus xstat
+				\item  Unordered sockets
+				\item  Delayed munmap
+				\item fork+exec versus posix\_spawn
+				\end{itemize}
+				
+			\end{block}
+
+		\end{column}
+		
+	\end{columns}
+	
+	
+\end{frame}	
+%-------------------------------------------------
 %-------------------------------------------------
 \end{document}
