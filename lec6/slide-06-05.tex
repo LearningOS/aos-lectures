@@ -1,0 +1,480 @@
+\input{../preamble}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[第6讲]{第6讲 ：The Programming Languages of OS} % The short title appears at the bottom of every slide, the full title is only on the title page
+\subtitle{第五节：Writing kernel in Rust?}
+\author{陈渝} % Your name
+\institute[清华大学] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+	清华大学计算机系 \\ % Your institution for the title page
+	\medskip
+	\textit{yuchen@tsinghua.edu.cn} % Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+%\begin{frame}
+%\frametitle{提纲} % Table of contents slide, comment this block out to remove it
+%\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+%\end{frame}
+%
+%%----------------------------------------------------------------------------------
+%%	PRESENTATION SLIDES
+%%----------------------------------------------------------------------------------------
+%
+%%------------------------------------------------
+%\section{第一节：课程概述} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
+%%------------------------------------------------
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- OS in Rust}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.2\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{rust-logo}
+			\includegraphics[width=1.\textwidth]{redox}
+			\includegraphics[width=1.\textwidth]{rcore}
+			\includegraphics[width=1.\textwidth]{firecracker}
+		\end{column}
+		
+		\begin{column}{.8\textwidth}
+			
+%			\Large
+		Is it time to rewrite the operating
+		system in Rust?
+		 \\
+		
+	Rust \&OS in the 2010s
+
+\begin{itemize}
+	
+	\item  First attempt at an operating system kernel in Rust seems to be
+	Alex Light’s Reenix, ca. 2015: a re-implementation of a teaching
+	operating system in Rust as an undergrad thesis
+	
+	
+	\item  Since Reenix’s first efforts, there have been quite a few small
+	systems in Rust, e.g.: Redox, Tifflin, Tock, intermezzOS,
+	RustOS/QuiltOS, Rux, and Philipp Oppermann’s Blog OS, and rcore.
+	
+	\item Some of these are teaching systems (intermezzOS, Blog OS),
+	some are unikernels (QuiltOS) and/or targeted at IoT (Tock)
+	
+	
+\end{itemize}
+
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- OS in Rust}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.2\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{rust-logo}
+			\includegraphics[width=1.\textwidth]{redox}
+			\includegraphics[width=1.\textwidth]{rcore}
+			\includegraphics[width=1.\textwidth]{firecracker}
+		\end{column}
+		
+		\begin{column}{.8\textwidth}
+			
+			OS in Rust?
+			
+			\begin{itemize}
+				
+				\item  Rust is a systems software programming language designed
+				around safety, parallelism, and speed
+				
+				\item Rust has a novel system of ownership, whereby it can statically
+				determine when a memory object is no longer in use
+				
+				\item This allows for the power of a garbage-collected language, but
+				with the performance of manual memory management
+				
+				\item  This is important because — unlike C — Rust is highly
+				composable, allowing for more sophisticated (and higher
+				performing!) primitives
+				
+				
+			\end{itemize}
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{Introduction -- OS in Rust}
+	\centering
+	\includegraphics[width=.8\textwidth]{rust-perf}
+	 \tiny Source: http://dtrace.org/blogs/bmc/2018/09/28/the-relative-performance-of-c-and-rust/
+	 
+\end{frame}
+
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- OS in Rust}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.2\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{rust-logo}
+			\includegraphics[width=1.\textwidth]{redox}
+			\includegraphics[width=1.\textwidth]{rcore}
+			\includegraphics[width=1.\textwidth]{firecracker}
+		\end{column}
+		
+		\begin{column}{.8\textwidth}
+			
+			OS in Rust? \\
+			Rust has a number of other features that make it highly
+			compelling for systems software implementation:
+			
+			\begin{itemize}
+				
+				\item Algebraic types allow robust, concise error handling
+				\item Hygienic macros allow for safe syntax extensions	
+				\item Foreign function interface allows for full-duplex integration
+				with C without sacrificing performance		
+				\item  “unsafe” keyword allows for some safety guarantees to be
+				surgically overruled (though with obvious peril)
+				\item active community and ecosystem, etc.
+				
+				
+				
+			\end{itemize}
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- OS in Rust}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.2\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{rust-logo}
+			\includegraphics[width=1.\textwidth]{redox}
+			\includegraphics[width=1.\textwidth]{rcore}
+			\includegraphics[width=1.\textwidth]{firecracker}
+		\end{column}
+		
+		\begin{column}{.8\textwidth}
+			
+			OS in Rust? \\
+			Rust has a number of other features that make it highly
+			compelling for systems software implementation:
+			
+			\begin{itemize}
+				
+				\item  If the history of operating systems implementation teaches us
+				anything, it’s that runtime characteristics trump development
+				challenges!
+				
+				\item  Structured languages (broadly) replaced assembly because
+				they performed as well
+				
+				\item every operating system retains some assembly for reasons
+				of performance!
+						
+				\item With its focus on performance and zero-cost abstractions, Rust
+				does represent a real, new candidate programming language
+				for operating systems implementation
+
+			\end{itemize}
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- OS in Rust}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.2\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{rust-logo}
+			\includegraphics[width=1.\textwidth]{redox}
+			\includegraphics[width=1.\textwidth]{rcore}
+			\includegraphics[width=1.\textwidth]{firecracker}
+		\end{column}
+		
+		\begin{column}{.8\textwidth}
+			
+			Challenges of OS in Rust? 
+			
+			\begin{itemize}
+				
+				\item While Rust’s advantages are themselves clear, it’s less clear
+				what the advantage is when replacing otherwise working code
+				
+				\item   For in-kernel code in particular, the safety argument for Rust carries less weight: in-kernel C tends to be de facto safe
+
+				\item Rust does, however, presents new challenges for kernel
+				development, esp. with respect to multiply-owned structures
+
+				\itemAn OS kernel — despite its historic appeal and superficial fit for	Rust — may represent more challenge than its worth
+				
+				
+			\end{itemize}
+			But what of hybrid/other approaches?
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- OS in Rust}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.2\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{rust-logo}
+			\includegraphics[width=1.\textwidth]{redox}
+			\includegraphics[width=1.\textwidth]{rcore}
+			\includegraphics[width=1.\textwidth]{firecracker}
+		\end{column}
+		
+		\begin{column}{.8\textwidth}
+			
+			OS in Rust? \\
+			Rust has a number of other features that make it highly
+			compelling for systems software implementation:
+			
+			\begin{itemize}
+				
+				\item  If the history of operating systems implementation teaches us
+				anything, it’s that runtime characteristics trump development
+				challenges!
+				
+				\item  Structured languages (broadly) replaced assembly because
+				they performed as well
+				
+				\item every operating system retains some assembly for reasons
+				of performance!
+				
+				\item With its focus on performance and zero-cost abstractions, Rust
+				does represent a real, new candidate programming language
+				for operating systems implementation
+				
+			\end{itemize}
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- OS in Rust}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.2\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{rust-logo}
+			\includegraphics[width=1.\textwidth]{redox}
+			\includegraphics[width=1.\textwidth]{rcore}
+			\includegraphics[width=1.\textwidth]{firecracker}
+		\end{column}
+		
+		\begin{column}{.8\textwidth}
+			
+			Hybrid approach I: Rust in-kernel components
+			
+			
+			\begin{itemize}
+				
+				\item One appeal of Rust is its ability to interoperate with C
+				
+				
+				\item One hybrid approach to explore would be to retain a
+				C-/assembly-based kernel while allowing for Rust-based
+				in-kernel components like device drivers and filesystems
+				
+				\item  This would allow for an incremental approach — and instead of
+				rewriting, Rust can be used for new development
+				
+				
+				\item An There is a prototype example of this in FreeBSD/Linux; others are	presumably possible
+				
+				
+				
+			\end{itemize}
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- OS in Rust}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.2\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{rust-logo}
+			\includegraphics[width=1.\textwidth]{redox}
+			\includegraphics[width=1.\textwidth]{rcore}
+			\includegraphics[width=1.\textwidth]{firecracker}
+		\end{column}
+		
+		\begin{column}{.8\textwidth}
+			
+			Hybrid approach II: Rust OS components
+
+			\begin{itemize}
+				
+				\item  An operating system is not just a kernel!
+
+				\item Operating systems have significant functionality at user-level:
+				utilities, daemons, service-/device-/fault- management facilities,
+				debuggers, etc.
+
+				\item  If anything, the definition of the OS is expanding to distributed
+				system that represents a multi-computer control plane — that
+				itself includes many components
+				
+				
+				\item These components are much more prone to run-time failure.
+				
+				\item Many of these are an excellent candidate for Rust.
+				
+			\end{itemize}
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- OS in Rust}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.2\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{rust-logo}
+			\includegraphics[width=1.\textwidth]{redox}
+			\includegraphics[width=1.\textwidth]{rcore}
+			\includegraphics[width=1.\textwidth]{firecracker}
+		\end{column}
+		
+		\begin{column}{.8\textwidth}
+			
+			Hybrid approach III: Rust-based firmware/hypervisor
+
+			\begin{itemize}
+				
+				\item  Below the operating system lurks hardware-facing special-
+				purpose software: firmware/hypervisor
+				
+				
+				\item Firmware/hypervisor is a sewer of unobservable software with a long
+				history of infamous quality problems
+				
+				
+				\item  Firmware has some of the same challenges as kernel
+				development (e.g., dealing with allocation failures), but may
+				otherwise be more amenable to Rust
+
+				\item This is especially true when/where firmware is in user-space
+				and is network-facing! (e.g., OpenBMC/OpenSBI)
+				
+			\end{itemize}
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+%-------------------------------------------------
+%-------------------------------------------------
+\end{document}
