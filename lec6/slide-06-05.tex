@@ -34,7 +34,342 @@
 %%------------------------------------------------
 %\section{第一节：课程概述} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
 %%------------------------------------------------
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- OS in Rust -- Why Rust?}
+	
+%	https://medium.com/@thomascountz/ownership-in-rust-part-1-112036b1126b
+	
+	\begin{columns}
+		
+		\begin{column}{.2\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{rust-logo}
+			\includegraphics[width=1.\textwidth]{redox}
+			\includegraphics[width=1.\textwidth]{rcore}
+			\includegraphics[width=1.\textwidth]{firecracker}
+		\end{column}
+		
+		\begin{column}{.8\textwidth}
+			
+						\Large
+			
+			Rust's central feature is ownership. 
+			\begin{itemize}
+			\item The Stack and the Heap
+			\end{itemize}
 
+			\includegraphics[width=.8\textwidth]{stack-heap}
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- OS in Rust -- Why Rust?}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.4\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{ownership}
+
+		\end{column}
+		
+		\begin{column}{.6\textwidth}
+			
+			\Large
+			
+			Rust's central feature is ownership. 
+			Keep these rules in mind :
+			\begin{itemize}
+				
+				\item  Each value in Rust has a variable that’s called its owner.
+				
+				
+				\item There can only be one owner at a time.
+				
+				\item When the owner goes out of scope, the value will be dropped.
+				
+				
+			\end{itemize}
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- OS in Rust -- Why Rust?}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.3\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{stack-heap}
+			
+		\end{column}
+		
+		\begin{column}{.7\textwidth}
+			
+			\Large
+			
+			Rust's central feature is ownership. 
+
+			\includegraphics[width=1.\textwidth]{ownership-ex1}
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- OS in Rust -- Why Rust?}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.3\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{stack-heap}
+			
+		\end{column}
+		
+		\begin{column}{.7\textwidth}
+			
+			\Large
+			
+			Rust's central feature is ownership. 
+			\\ 
+			Copy vs Move
+			\includegraphics[width=1.\textwidth]{ownership-ex2}
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- OS in Rust -- Why Rust?}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.5\textwidth}
+			\Large
+			Copy trait when using \&str 
+			\includegraphics[width=1.\textwidth]{ownership-ex3}
+			
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+			\Large
+			
+
+			Move trait when using the heap
+			\includegraphics[width=1.\textwidth]{ownership-ex4}
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- OS in Rust -- Why Rust?}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.5\textwidth}
+			\Large
+			A rough sketch of copying String type data 
+			\includegraphics[width=1.\textwidth]{ownership-ex5}
+			
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+			\Large
+			
+			
+			Dropping hello1
+			\includegraphics[width=1.\textwidth]{ownership-ex6}
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- OS in Rust -- Why Rust?}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.3\textwidth}
+			\Large
+			Double Free Error
+			\includegraphics[width=1.\textwidth]{ownership-ex7}
+			
+		\end{column}
+		
+		\begin{column}{.7\textwidth}
+			
+			\Large
+			
+			
+			Deep copy
+			\includegraphics[width=1.\textwidth]{ownership-ex8}
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{Introduction -- OS in Rust -- Why Rust?}
+	\centering
+	\Large
+	Ownership and Functions
+	\includegraphics[width=1.\textwidth]{ownership-ex9}
+	Copy versus Move
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- OS in Rust -- Why Rust?}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.5\textwidth}
+			\centering
+			\Large
+			Copy
+			\includegraphics[width=1.\textwidth]{ownership-ex10}
+			
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+			\Large
+			
+			
+			Move
+			\includegraphics[width=.9\textwidth]{ownership-ex11}
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{Introduction -- OS in Rust -- Why Rust?}
+	\centering
+	\Large
+	clone()
+	\includegraphics[width=.6\textwidth]{ownership-ex12}
+	
+	\includegraphics[width=.6\textwidth]{ownership-ex13}
+	Giving ownership
+\end{frame}
+
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- OS in Rust -- Why Rust?}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.3\textwidth}
+			\centering
+			\Large
+			borrowing
+			\includegraphics[width=1.\textwidth]{ownership-ex14}
+			
+		\end{column}
+		
+		\begin{column}{.7\textwidth}
+			
+			\Large
+			
+			
+			Passing a reference/borrowing
+			\includegraphics[width=1.\textwidth]{ownership-ex15}
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[plain]	
+	\frametitle{Introduction -- OS in Rust -- Why Rust?}
+	\centering
+%	\Large
+	Passing a mutable reference between functions
+	\includegraphics[width=.6\textwidth]{ownership-ex16}
+	Dangling Reference, ERR!
+	\includegraphics[width=.4\textwidth]{ownership-ex17}
+
+\end{frame}
 %-------------------------------------------------
 \begin{frame}[plain]
 	\frametitle{Introduction -- OS in Rust}
@@ -267,7 +602,7 @@
 				\item Rust does, however, presents new challenges for kernel
 				development, esp. with respect to multiply-owned structures
 
-				\itemAn OS kernel — despite its historic appeal and superficial fit for	Rust — may represent more challenge than its worth
+				\item An OS kernel - despite its historic appeal and superficial fit for	Rust - may represent more challenge than its worth
 				
 				
 			\end{itemize}
@@ -472,6 +807,22 @@
 		
 		
 	\end{columns}
+	
+	
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{References}
+	
+	\begin{itemize}
+		
+		\item Is it time to rewrite the operating system in Rust? Bryan Cantrill, tech talk, 2018
+		\item Ownership in Rust, Thomas Countz, 2018
+		
+		
+		
+	\end{itemize}
 	
 	
 \end{frame}
