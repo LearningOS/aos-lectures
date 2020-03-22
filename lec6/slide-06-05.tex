@@ -34,6 +34,271 @@
 %%------------------------------------------------
 %\section{第一节：课程概述} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
 %%------------------------------------------------
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- OS in Rust}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.2\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{rust-logo}
+			\includegraphics[width=1.\textwidth]{redox}
+			\includegraphics[width=1.\textwidth]{rcore}
+			\includegraphics[width=1.\textwidth]{firecracker}
+		\end{column}
+		
+		\begin{column}{.8\textwidth}
+			\centering
+			\LARGE
+			OS in Rust?
+			
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- OS in Rust -- Go vs Rust}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.2\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{rust-logo}
+			\includegraphics[width=1.\textwidth]{redox}
+			\includegraphics[width=1.\textwidth]{rcore}
+			\includegraphics[width=1.\textwidth]{firecracker}
+		\end{column}
+		
+		\begin{column}{.8\textwidth}
+			\includegraphics[width=.9\textwidth]{other-vs-rust}
+			
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- OS in Rust -- Go vs Rust}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.2\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{rust-logo}
+			\includegraphics[width=1.\textwidth]{redox}
+			\includegraphics[width=1.\textwidth]{rcore}
+			\includegraphics[width=1.\textwidth]{firecracker}
+		\end{column}
+		
+		\begin{column}{.8\textwidth}
+		    \includegraphics[width=.9\textwidth]{go-vs-rust}
+			
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- OS in Rust}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.2\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{rust-logo}
+			\includegraphics[width=1.\textwidth]{redox}
+			\includegraphics[width=1.\textwidth]{rcore}
+			\includegraphics[width=1.\textwidth]{firecracker}
+		\end{column}
+		
+		\begin{column}{.8\textwidth}
+			
+			Go and Rust Similarities
+			
+			\begin{itemize}
+				
+				\item  Strongly typed.
+				
+				\item Prefer composition over inheritance.
+				
+				\item Errors are values.
+				
+				\item  Lightweight, performant, cross platform, systems programming.
+				
+				\item Great tooling: IDE support, formatter, LSP.
+				
+				\item Integrated testing and documentation.
+			\end{itemize}
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- OS in Rust}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.2\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{rust-logo}
+			\includegraphics[width=1.\textwidth]{redox}
+			\includegraphics[width=1.\textwidth]{rcore}
+			\includegraphics[width=1.\textwidth]{firecracker}
+		\end{column}
+		
+		\begin{column}{.8\textwidth}
+			
+			Rust > Go
+			
+			\begin{itemize}
+				
+				\item  Functional features and higher abstractions with no run time cost.
+				
+				\item FFI to C code.
+				
+				\item Errors are values.
+				
+				\item  Generally more performant.
+				
+				\item Compile time memory and thread safety guarantees.
+				
+				\item Package management support via Cargo.
+			\end{itemize}
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
+
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- OS in Rust}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.2\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{rust-logo}
+			\includegraphics[width=1.\textwidth]{redox}
+			\includegraphics[width=1.\textwidth]{rcore}
+			\includegraphics[width=1.\textwidth]{firecracker}
+		\end{column}
+		
+		\begin{column}{.8\textwidth}
+			
+			Go > Rust
+			
+			\begin{itemize}
+				
+				\item Simple, clear syntax and language features.
+				
+				\item Fast compile.
+				
+				\item Easy cross compilation.
+				
+				\item Batteries included std lib.
+				
+				\item Learning curve and productivity.
+				
+			\end{itemize}
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Introduction -- OS in Rust}
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.2\textwidth}
+			
+			\includegraphics[width=1.\textwidth]{rust-logo}
+			\includegraphics[width=1.\textwidth]{redox}
+			\includegraphics[width=1.\textwidth]{rcore}
+			\includegraphics[width=1.\textwidth]{firecracker}
+		\end{column}
+		
+		\begin{column}{.8\textwidth}
+			
+			OS in Rust?
+			
+			\begin{itemize}
+				
+				\item  Rust is a systems software programming language designed
+				around safety, parallelism, and speed
+				
+				\item Rust has a novel system of ownership, whereby it can statically
+				determine when a memory object is no longer in use
+				
+				\item This allows for the power of a garbage-collected language, but
+				with the performance of manual memory management
+				
+				\item  This is important because — unlike C — Rust is highly
+				composable, allowing for more sophisticated (and higher
+				performing!) primitives
+				
+				
+			\end{itemize}
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+	
+\end{frame}
+
 %-------------------------------------------------
 \begin{frame}[plain]
 	\frametitle{Introduction -- OS in Rust -- Why Rust?}
@@ -420,51 +685,7 @@
 	
 \end{frame}
 
-%-------------------------------------------------
-\begin{frame}[plain]
-	\frametitle{Introduction -- OS in Rust}
-	
-	
-	
-	\begin{columns}
-		
-		\begin{column}{.2\textwidth}
-			
-			\includegraphics[width=1.\textwidth]{rust-logo}
-			\includegraphics[width=1.\textwidth]{redox}
-			\includegraphics[width=1.\textwidth]{rcore}
-			\includegraphics[width=1.\textwidth]{firecracker}
-		\end{column}
-		
-		\begin{column}{.8\textwidth}
-			
-			OS in Rust?
-			
-			\begin{itemize}
-				
-				\item  Rust is a systems software programming language designed
-				around safety, parallelism, and speed
-				
-				\item Rust has a novel system of ownership, whereby it can statically
-				determine when a memory object is no longer in use
-				
-				\item This allows for the power of a garbage-collected language, but
-				with the performance of manual memory management
-				
-				\item  This is important because — unlike C — Rust is highly
-				composable, allowing for more sophisticated (and higher
-				performing!) primitives
-				
-				
-			\end{itemize}
-			
-		\end{column}
-		
-		
-	\end{columns}
-	
-	
-\end{frame}
+
 
 %----------------------------------------------
 \begin{frame}[plain]	
@@ -820,7 +1041,7 @@
 		\item Is it time to rewrite the operating system in Rust? Bryan Cantrill, tech talk, 2018
 		\item Ownership in Rust, Thomas Countz, 2018
 		
-		
+		\item rust vs go https://jackyzhen.github.io/rust-vs-go-slides/
 		
 	\end{itemize}
 	
