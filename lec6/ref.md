@@ -325,3 +325,150 @@ fn longest_with_an_announcement<'a, T>(x: &'a str, y: &'a str, ann: T) -> &'a st
 ```
 
 这个是那个返回两个字符串 slice 中较长者的 `longest` 函数，不过带有一个额外的参数 `ann`。`ann` 的类型是泛型 `T`，它可以被放入任何实现了 `where` 从句中指定的 `Display` trait 的类型。这个额外的参数会在函数比较字符串 slice 的长度之前被打印出来，这也就是为什么 `Display` trait bound 是必须的。因为生命周期也是泛型，所以生命周期参数 `'a` 和泛型类型参数 `T` 都位于函数名后的同一尖括号列表中。
+
+
+
+
+===================================
+## RUST与C的对比
+
+
+
+### Q1
+下面的代码片段是否有漏洞？如果有，请指出
+```
+#define SIZE 6
+uint8_t* pointer = (uint8_t*) malloc(SIZE); 
+for(int i = 0 ; i < SIZE ; ++i) {
+    pointer[i] = i; 
+}
+
+```
+
+A1：
+
+空指针引用（NULL Dereference）。如果开发者忘记了检查所返回的指针是否正确性，就可能会导致空指针引用。
+```
+let my_var: u32 = 42;
+let my_ref: &u32 = &my_var; // <-- This is a reference. References ALWAYS point to valid data!
+let my_var2 = *my_ref; // <-- An example for a Dereference. 
+```
+在Rust中，Rust处理这类指针错误的方式非常极端，在“安全”代码中粗暴简单地禁用所有裸指针。此外在“安全”代码中，Rust还取消了空值。
+不过不用担心，Rust中存在一个优雅的替代方案——引用和借贷的方式。本质上来说，这些引用（references）还是那些老指针，但有了生命周期（Lifetimes）和借贷（Borrowing）规则，系统就能确保代码的安全性。
+
+
+### Q2
+下面的代码片段是否有漏洞？如果有，请指出
+```
+uint8_t* pointer = (uint8_t*) malloc(SIZE);
+
+...
+
+if (err) {
+  abort = 1;
+  free(pointer);
+}
+
+...
+
+if (abort) {
+  logError("operation aborted before commit", pointer);
+}
+
+```
+A2：
+
+释放内存后再使用（Use After Free）,会产生严重的漏洞，导致黑客随意操控你的代码。
+```
+fn foobar() {
+    let foo = Hashmap::new();
+^  
+|  
+|   {
+|   let bar = Vec::new();
+|   ^
+|   |
+|   | 
+|   |
+|   |
+|   V
+|   } // `bar` will be freed once we get here
+|  
+V  
+} // `foo` will be freed once we get here
+```
+在Rust中，Rust也使用资源获取即初始化（Resource Acquisition Is Initialization）的方式，这意味着每个变量在超出范围后都一定会被释放，因此在“安全的”Rust代码中，永远不必担心释放内存的事情。
+但Rust不满足于此，它更进一步，直接禁止用户访问被释放的内存。这一点通过Ownership规则实现，
+在Rust中，变量有一个所有权（Ownership）属性，owner有权随意调用所属的数据，也可以在有限的lifetime内借出数据（即Borrowing）。
+
+此外，数据只能有一个owner，这样一来，通过RAII规则，owner的范围指定了何时释放数据。最后，ownership还可以被“转移”，当开发者将ownership分配给另一个不同的变量时，ownership就会转移。
+
+
+
+### Q3：
+下面的代码片段是否有漏洞？如果有，请指出
+```
+uint8_t* get_dangling_pointer(void) {
+    uint8_t array[4] = {0};
+    return &array[0];
+}
+```
+
+A3：
+返回悬空指针（Dangling Pointers）。C语言老手都知道，向stack-bound变量返回指针很糟糕， 返回的指针会指向未定义内存。虽然这类错误多见于新手，一旦习惯堆栈规则和调用惯例，就很难出现这类错误了。
+
+在Rust中
+
+事实证明，Rust的lifetime check不仅适用于本地定义变量，也适用于返回值。
+
+与C语言不同，在返回reference时，Rust的编译器会确保相关内容可有效调用，也就是说，编译器会核实返回的reference有效。即Rust的reference总是指向有效内存。
+```
+fn get_dangling_pointer() -> &u8 {
+    let array = [0; 4];
+    &array[0]
+}
+
+// main.rs:1:30: 1:33 error: missing lifetime specifier [E0106]
+// main.rs:1 fn get_dangling_pointer() -> &u8 {
+//    
+```
+
+#### Q4：
+下面的代码片段是否有漏洞？如果有，请指出
+```
+void print_out_of_bounds(void) {
+    uint8_t array[4] = {0};
+    printf("%u\r\n", array[4]);
+}
+
+```
+
+A4:
+
+超出访问范围（Out Of Bounds Access）
+另一个常见问题就是在访问时，访问了没有权限的内存，多半情况就是所访问的数组，其索引超出范围。这种情况也出现在读写操作中，访问超限内存会导致可执行文件出现严重的漏洞，这些漏洞可能会给黑客操作你的代码大开方便之门。
+
+在Rust中，在这种情况下，Rust利用运行时检查以减少这种不必要的行为，非常方便。
+fn print_panics() {
+    let array = [0; 4];
+    println!("{}", array[4]);
+}
+
+// thread '<main>' panicked at 'index out of bounds: the len is 4 but the index is 4', main.rs:3
+
+
+
+总结：
+
+如果你曾经编写过任何规模大小的程序，你可能会遇到各种错误。你在编码时产生的微小的错误会导致你的程序执行失败。程序越复杂，发生错误的概率越高！
+
+为了修复和防止错误，有很多方法可供程序员使用。其中一个是在运行程序之前确定程序的正确性：静态类型。这种技术是设计编程语言的一部分，并且可以防止简单的错误，例如尝试使用字符串作为整数，或者比较类型不同的对象，例如 Car 和 Book。
+
+我的个人观点是，编程语言及其实现应该尽可能地捕获程序员所犯的错误，从而使得他们能构建更好更安全的软件。虽然静态类型使得语言更加复杂和难以学习，但它为程序员提供了一个安全的机制，我相信这是非常值得的。
+
+### 参考：
+- 用Rust解决C语言的隐患  https://blog.csdn.net/qiansg123/article/details/80127743
+- Rust 语言如何帮助你防止bug   https://www.oschina.net/translate/how-rust-helps-you-prevent-bugs?print
+- Reddit讨论：CppCon 2017 - 在Facebook上反复出现的 C++ bug https://cloud.tencent.com/developer/article/1489383
+- C++工程师的Rust迁移之路 系列 https://zhuanlan.zhihu.com/p/75385189
+
