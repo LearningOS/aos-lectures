@@ -7,6 +7,8 @@
 - [Shared Memory Consistency Models: A Tutorial](http://www.dtic.mil/get-tr-doc/pdf?AD=ADA638015) 
 - [Is Parallel Programming Hard, And, If So, What Can You Do About It?](https://www.kernel.org/pub/linux/kernel/people/paulmck/perfbook/perfbook.html)
 - [The C++11 Memory Model and GCC](https://gcc.gnu.org/wiki/Atomic/GCCMM)
+- Linux-Kernel Memory Ordering https://events.static.linuxfound.org/sites/events/files/slides/LinuxMM.2016.09.19a.LCE_.pdf
+
 ### msc lock info
 - http://www.quora.com/How-does-an-MCS-lock-work
 - paper http://www.cs.rochester.edu/u/scott/papers/1991_TOCS_synch.pdf.
@@ -17,3 +19,7 @@
 - Ticket Lock, CLH Lock, MCS Lock https://www.cnblogs.com/stevenczp/p/7136416.html
 
 
+### RCU
+- https://www.ibm.com/developerworks/cn/linux/l-rcu/index.html
+- https://www.kernel.org/doc/html/v5.6-rc1/RCU/whatisRCU.html
+- https://yq.aliyun.com/articles/493674
