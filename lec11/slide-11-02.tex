@@ -41,9 +41,16 @@
 
 			\centering
 			
-			\includegraphics[width=.75\textwidth]{baseline-system}
+			\includegraphics[width=.6\textwidth]{baseline-system}
 
-	
+
+%左对齐、居中对齐、右对齐的环境分别为flushleft、center和flushright。也可以使用命令\raggedright、\centering和\raggedleft使以后的文本按指定方式对齐.
+\raggedright
+\tiny ref:
+Some info are from
+
+Paul McKenney (IBM) Tom Hart (University of Toronto), Frans Kaashoek (MIT), 
+Daniel J. Sorin "A Primer on Memory Consistency and Cache Coherence",  Fabian Giesen "Cache coherency primer", Mingyu Gao(Tsinghua),Yubin Xia(SJTU)	
 \end{frame}
 
 %----------------------------------------------
@@ -60,7 +67,7 @@
 %			\Large \centering
 			基本知识回顾 --缓存（Cache）
 			\begin{itemize}
-				\item 在现代的 CPU（大多数）上，所有的内存访问都需要通过层层的缓存来进行。
+				\item 在现代的CPU上，基本上所有的内存访问都需要通过多层次的缓存来进行。
 				\item 例外：比如，对映射成内存地址的 I/O 口，这些访问至少会绕开这个流程的一部分。
 				\item CPU 的读 / 写（以及取指令）单元正常情况下甚至都不能直接访问内存——这是物理结构决定的。
 				\item 缓存是分“段”（line）的，一个段对应一块存储空间，大小是 32、64、128字节。
@@ -130,36 +137,11 @@
 		
 		
 	\end{block}
-	\pause
+	
 
 	
 \end{frame}
 
-
-%----------------------------------------------
-\begin{frame}[plain]	
-	\frametitle{Introduction -- 一致性协议（Coherency protocols） }
-	
-	
-	\begin{columns}
-		
-		\begin{column}{.4\textwidth}
-			\includegraphics[width=1.\textwidth]{baseline-system}
-		\end{column}
-		\begin{column}{.6\textwidth}
-			%			\Large \centering
-			解决问题的方法 1
-			\begin{itemize}
-				\item 这个问题的根源是我们拥有多组缓存，而不是多个 CPU 核
-				\item 让多个 CPU 核共用一组缓存
-				\item 在每一个指令周期，只有一个幸运的 CPU 能通过一级缓存做内存操作，运行它的指令
-
-			\end{itemize}
-			
-		\end{column}
-	\end{columns}
-	
-\end{frame}
 
 
 %----------------------------------------------
@@ -182,7 +164,7 @@
 			\end{itemize}
 			问题 
 			\pause
-			太慢！
+			: 太慢！
 		\end{column}
 	\end{columns}
 	
@@ -251,6 +233,42 @@
 		\end{column}
 	\end{columns}
 	
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[plain]	
+    \frametitle{Introduction -- MESI一致性协议}
+    
+    
+    \begin{columns}
+        
+        \begin{column}{.4\textwidth}
+            \includegraphics[width=1.\textwidth]{mesi-state}
+        \end{column}
+        \begin{column}{.6\textwidth}
+            %			\Large \centering
+            解决问题的方法 3: MESI一致性协议
+            
+            Protocol Optimization – E State
+            
+            Scenario: private data to a core is first read and then later written
+            
+            With MSI protocol: two broadcast bus transactions
+            \begin{itemize}				
+                \item One BRd for I -> S :  CRd/BRd
+                \item  One BRdX for S -> M : CWr/BRdX
+            \end{itemize}
+            
+            With MESI protocol: one bus transaction
+            \begin{itemize}	
+                \item First I -> E  : CRd/BRd
+                \item E -> M  : silently upgrade, no bus transaction since we know it is the only copy
+                \item E -> S: downgrade if sharing				
+            \end{itemize}		
+            
+        \end{column}
+    \end{columns}
+    
 \end{frame}
 %----------------------------------------------
 \begin{frame}[plain]	
@@ -390,38 +408,196 @@
 
 %----------------------------------------------
 \begin{frame}[plain]	
-	\frametitle{Introduction -- MESI一致性协议}
-	
-	
-	\begin{columns}
-		
-		\begin{column}{.4\textwidth}
-			\includegraphics[width=1.\textwidth]{mesi-state}
-		\end{column}
-		\begin{column}{.6\textwidth}
-			%			\Large \centering
-			解决问题的方法 3: MESI一致性协议
-			
-			Protocol Optimization – E State
-			
-			Scenario: private data to a core is first read and then later written
-			
-			With MSI protocol: two broadcast bus transactions
-			\begin{itemize}				
-				\item One BRd for I -> S :  CRd/BRd
-				\item  One BRdX for S -> M : CWr/BRdX
-			\end{itemize}
-		
-			With MESI protocol: one bus transaction
-			\begin{itemize}	
-				\item First I -> E  : CRd/BRd
-				\item E -> M  : silently upgrade, no bus transaction since we know it is the only copy
-				\item E -> S: downgrade if sharing				
-			\end{itemize}		
-			
-		\end{column}
-	\end{columns}
-	
+    \frametitle{Introduction -- MESI一致性协议}
+    
+    
+    \begin{columns}
+        
+        \begin{column}{.4\textwidth}
+            \includegraphics[width=1.\textwidth]{mesi-storebuffer}
+        \end{column}
+        \begin{column}{.6\textwidth}
+            %			\Large \centering
+            解决问题的方法 3: MESI一致性协议
+            
+            MESI 解决了 cache 数据一致性的问题，但
+            cpu core之间通信存在延迟,所以在 cpu core 与 cache 中
+            间加入了 store buffers。
+            
+            加入了 store buffers,解决了 Stalls的性能问题, 但是又引入了新的问题:
+            store buffers 与 cache 数据的不一致性问题。
+            
+        \end{column}
+    \end{columns}
+    
 \end{frame}
+
+%----------------------------------------------
+\begin{frame}[plain]	
+    \frametitle{Introduction -- MESI一致性协议}
+    
+    
+    \begin{columns}
+        
+        \begin{column}{.4\textwidth}
+            \includegraphics[width=1.\textwidth]{mesi-sb-direct}
+        \end{column}
+        \begin{column}{.6\textwidth}
+            %			\Large \centering
+            解决问题的方法 3: MESI一致性协议
+       
+            Store Buffer
+            
+            ===========
+                        
+            加入了 store buffers,解决了 Stalls的性能问题, 但是又引入了新的问题:
+            store buffers 与 cache 数据的不一致性问题。
+            
+            从硬件角度来看,需要引入了
+            Store Forwarding机制:即可以通过store buffer把一个特定 CPU 的 store 直接转给它
+            随后的加载,而不通过 cache。这样避免了 cpu 取 cache 数据与
+            store buffer 数据的不一致问题。
+            
+            
+            
+        \end{column}
+    \end{columns}
+    
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[plain]	
+    \frametitle{Introduction -- MESI一致性协议}
+    
+    
+    \begin{columns}
+        
+        \begin{column}{.4\textwidth}
+            \includegraphics[width=1.\textwidth]{cache-with-wb-iq}
+        \end{column}
+        \begin{column}{.6\textwidth}
+            %			\Large \centering
+            解决问题的方法 3: MESI一致性协议
+            
+            Invalidate  Queue
+            
+            =================
+            
+            由于 store buffers的size很小,cpu 执行几个 store 操作就会把
+            buffer 填满, 这时候 CPU 必须等待 invalidation ACK 消息,来释
+            放缓冲区空间。所以我们在这里引入 Invalidate  Queues。加快invalidate相关的状态转换和cache一致性处理。
+            
+            
+            
+            
+        \end{column}
+    \end{columns}
+    
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[plain]	
+    \frametitle{Introduction -- MESI一致性协议}
+    
+    
+    \begin{columns}
+        
+        \begin{column}{.4\textwidth}
+            \includegraphics[width=1.\textwidth]{cache-with-wb-iq}
+        \end{column}
+        \begin{column}{.6\textwidth}
+            %			\Large \centering
+            解决问题的方法 3: MESI一致性协议
+            
+            Invalidate  Queue的问题
+            
+            =================
+            
+有“Invalidate Queues”的 CPU 会在第一时间将 Invalidate
+消息加入队列,并回复 Invalidate Ack,而不用管此时 cache line
+是否已被移除。
+
+CPU 在发送回复之前,CPU 需要参考当前的队
+列:如果对应的 cache line 已经在队列中,CPU 不能立即发送回
+复,而是需要等待这一项被处理后才能回复。
+
+这就导致一个memory misordering问题:当 CPU 排队某个 invalidate 消息后,
+在它还没有处理这个消息之前,就再次读取该消息对应的数据
+了,该数据此时本应该已经失效的。
+
+        \end{column}
+    \end{columns}
+    
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[plain]	
+    \frametitle{Introduction -- MESI一致性协议}
+    
+    
+    \begin{columns}
+        
+        \begin{column}{.4\textwidth}
+            \includegraphics[width=1.\textwidth]{cache-with-wb-iq}
+        \end{column}
+        \begin{column}{.6\textwidth}
+            %			\Large \centering
+            解决问题的方法 3: MESI一致性协议
+            
+            Invalidate  Queue v.s. Memory  Barriers
+            
+            ==============================
+            
+            当一个 CPU 执行 memory barrier 指令时，会将失效队列
+            中的所有项都做标记,并强制 memory barrier 后续的所有加载都
+            要等到标记项被处理后才执行。
+            \begin{itemize}
+                \item read memory barrier(rmb) 只处理 Invalidate Queues,从而只限制有 rmb 的 CPU
+                的 load 操作。
+                \item write memory barrier(wmb) 只处理 store buffer,从而只限制有 wmb 的 CPU 的
+                store 操作。
+                \item 完整的 memory barrier(smp\_mb) 对 Invalidate Queues 和 store buffer 都做标记,
+                所以对于 CPU 的 load 和 store 操作都限制。
+
+                
+            \end{itemize}
+            
+        \end{column}
+    \end{columns}
+    
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[plain]	
+    \frametitle{Introduction -- MESI一致性协议}
+    
+    
+    \begin{columns}
+        
+        \begin{column}{.4\textwidth}
+            \includegraphics[width=1.\textwidth]{cache-with-wb-iq}
+        \end{column}
+        \begin{column}{.6\textwidth}
+            %			\Large \centering
+            在 MC/SMP/NUMA 环境下,我们不能假定:
+            
+
+            \begin{itemize}
+                \item 一个 CPU 能够按顺序看到另一个 CPU 的访存效果
+                \item 与 CPU 相关的硬件会按顺序访存
+   
+            \end{itemize}
+            SMP Read \& Write Memory Barriers 会影响系统中的
+            CPU的代码/内存访问顺序，做到代码顺序局部乱序,总体有序。
+            
+            在内核代码中,如果没有 smp memory barriers 指令，CPU可能会按随意顺序读取 memory,
+            这会导致 kernel crash。
+            
+        \end{column}
+    \end{columns}
+    \end{frame}
 %-------------------------------------------------
 \end{document}

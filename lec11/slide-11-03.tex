@@ -44,7 +44,7 @@
 			\includegraphics[width=1.\textwidth]{baseline-system}
 		\end{column}
 		\begin{column}{.6\textwidth}
-		基本知识回顾
+		回顾：内存 缓存
 			\begin{itemize}
 				\item 在现代的 CPU（大多数）上，所有的内存访问都需要通过层层的缓存来进行。
 				\item 例外：比如，对映射成内存地址的 I/O 口，这些访问至少会绕开这个流程的一部分。
@@ -54,6 +54,13 @@
 			
 		\end{column}
 	\end{columns}
+
+\raggedright
+\tiny ref:
+Some info are from
+
+Paul McKenney (IBM) Tom Hart (University of Toronto), Frans Kaashoek (MIT), 
+Daniel J. Sorin "A Primer on Memory Consistency and Cache Coherence",  Fabian Giesen "Cache coherency primer", Mingyu Gao(Tsinghua),Yubin Xia(SJTU)	
 	
 \end{frame}
 
@@ -247,10 +254,10 @@ do
 
     How Core or Cores Might Reorder Memory Accesses
      \begin{itemize}
-        \item Store-store reordering: non-FIFO write buffer    
-        \item Load-load reordering: C1, C2 dynamically scheduled
-        \item Load-store reordering:  Out-of-order cores
-        \item Sstore-load reordering:  Out-of-order cores			                
+        \item store-store reordering: non-FIFO write buffer    
+        \item load-load reordering: C1, C2 dynamically scheduled
+        \item load-store reordering:  Out-of-order cores
+        \item store-load reordering:  Out-of-order cores			                
     \end{itemize}
 \end{frame}
 
