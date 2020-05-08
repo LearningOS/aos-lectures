@@ -70,7 +70,8 @@ Some info are from
 
 Paul McKenney (IBM) Tom Hart (University of Toronto), Frans Kaashoek (MIT), 
 Daniel J. Sorin "A Primer on Memory Consistency and Cache Coherence", Fabian Giesen "Cache coherency primer", Mingyu Gao(Tsinghua),Yubin Xia(SJTU)
-"The C/C++ Memory Model: Overview and Formalization",Mark Batty,etc. "C++ 11 Memory Consistency Model", Sebastian Gerstenberg 
+"The C/C++ Memory Model: Overview and Formalization",Mark Batty,etc. "C++ 11 Memory Consistency Model", Sebastian Gerstenberg;"HOW UBISOFT MONTREAL
+DEVELOPS GAMES FOR MULTICORE Before \& After C++11", Jeff Preshing
 
 	
 \end{frame}
@@ -106,6 +107,12 @@ Daniel J. Sorin "A Primer on Memory Consistency and Cache Coherence", Fabian Gie
     
 \end{frame}
 
+%----------------------------------------------
+\begin{frame}
+    \frametitle{Ways to Achieve Synchronizes-With}
+    C++11/17/20, Go, RUST, Java, ...
+    \includegraphics[width=1.\textwidth]{ways-sync}
+\end{frame}
 
 %----------------------------------------------
 \begin{frame}
@@ -169,6 +176,30 @@ Daniel J. Sorin "A Primer on Memory Consistency and Cache Coherence", Fabian Gie
     \tiny
     https://preshing.com/20120515/memory-reordering-caught-in-the-act/
 \end{frame}
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{Real Hardware/Compiler}
+    Real hardware doesn’t run the code that you wrote.
+    
+    Real compiler doesn’t produce the code that you wrote.
+    
+    \centering
+    \includegraphics[width=.7\textwidth]{int-x-1}
+
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{Real Hardware/Compiler}
+    Real hardware doesn’t run the code that you wrote.
+    
+    Real compiler doesn’t produce the code that you wrote.
+    
+    \centering
+    \includegraphics[width=1.\textwidth]{int-x-2-bad}
+    
+\end{frame}
 %----------------------------------------------
 \begin{frame}
     \frametitle{Real Hardware/Compiler}
@@ -187,7 +218,7 @@ Daniel J. Sorin "A Primer on Memory Consistency and Cache Coherence", Fabian Gie
     \begin{columns}
         
         \begin{column}{.4\textwidth}
-            \includegraphics[width=1.\textwidth]{cpp-mem-model}
+            \includegraphics[width=1.\textwidth]{cpp-11}
         \end{column}
         \begin{column}{.6\textwidth}
             
@@ -481,8 +512,19 @@ void sendValue(int x)
         \end{column}
     \end{columns}
     
-\end{frame}
+    \end{frame}
 
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    \Large
+    If multiple threads access the same variable concurrently, and at least one
+    thread modifies it, all threads must use C++11 atomic operations.
+    
+    \centering
+    \includegraphics[width=.8\textwidth]{atomic-int-x}
+\end{frame}
 
 %----------------------------------------------
 \begin{frame}
@@ -524,6 +566,75 @@ void sendValue(int x)
     \includegraphics[width=1.\textwidth]{dekker-seq-order}
 \end{frame}
 
+
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    std :: memory\_order\_seq\_cst
+    
+    %    \normalsize
+    %    There is a total order over all seq cst operations. This order
+    %    contributes to inter-thread ordering constraints.
+    \centering
+    \includegraphics[width=.8\textwidth]{seq-order}
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    std :: memory\_order\_seq\_cst
+    
+    
+    sequential consistency
+    
+    \normalsize
+    直观上，读操作应该返回“最后”一次写入的值。
+    \begin{itemize}
+        \item 在单处理器系统中，“最后”由程序次序定义。
+        \item 在多处理器系统中，我们称之为顺序连贯(sequential consistency, SC).
+    \end{itemize}
+    约束条件
+    \begin{itemize}
+        \item 在每个处理器内，维护每个处理器的程序次序；
+        \item 在所有处理器间，维护单一的表征所有操作的次序。对于写操作W1, W2, 不能出现从处理器 P1 看来，执行次序为 W1->W2; 从处理器 P2 看来，执行次序却为 W2->W1 这种情况。 
+    \end{itemize}
+    
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    std :: memory\_order\_release/acquire
+    
+    \normalsize
+    An acquire load makes prior writes to other memory locations
+    made by the thread that did the release visible in the loading
+    thread.
+    
+    
+    \includegraphics[width=.8\textwidth]{dekker-acrel-order}
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    std :: memory\_order\_release/acquire
+    
+    \normalsize
+    An acquire load makes prior writes to other memory locations
+    made by the thread that did the release visible in the loading
+    thread.
+    
+    
+    \includegraphics[width=.8\textwidth]{acrel-pic}
+\end{frame}
+
 %----------------------------------------------
 \begin{frame}
     \frametitle{C++11 Memory Model}
@@ -536,7 +647,7 @@ void sendValue(int x)
 Acquire semantics is a property that can only apply to operations that read from shared memory, whether they are read-modify-write operations or plain loads. The operation is then considered a \textbf{read-acquire}. Acquire semantics prevent memory reordering of the read-acquire with any read or write operation that follows it in program order.
 \end{block}
 %\includegraphics[width=.3\textwidth]{read-require}
-\end{frame}
+    \end{frame}
 
 %----------------------------------------------
 \begin{frame}
@@ -562,20 +673,7 @@ Release semantics is a property that can only apply to operations that write to 
     \centering
     \includegraphics[width=.6\textwidth]{acq-rel}
 \end{frame}
-%----------------------------------------------
-\begin{frame}
-    \frametitle{C++11 Memory Model}
-    \LARGE
-    std :: memory\_order\_release/acquire
-    
-    \normalsize
-    An acquire load makes prior writes to other memory locations
-    made by the thread that did the release visible in the loading
-    thre\includegraphics[width=1.\textwidth]{dekker-acrel-order}ad.
-    
-    
-    \includegraphics[width=1.\textwidth]{dekker-acrel-order}
-\end{frame}
+
 
 %----------------------------------------------
 \begin{frame}[fragile]
@@ -632,16 +730,37 @@ void consume(int iterations) {
 %----------------------------------------------
 \begin{frame}
     \frametitle{C++11 Memory Model}
+    %    https://preshing.com/20140709/the-purpose-of-memory_order_consume-in-cpp11/
     \LARGE
     std :: memory\_order\_consume
     
     
     \normalsize
-    A consume load makes prior writes to data-dependent memory
+    (\textbf{Data Dependency Ordering})A consume load makes prior writes to data-dependent memory
     locations made by the thread that did the release visible in the
     loading thread.
     
+    \LARGE
+    \centering
+    \textbf{Data Dependency}
     
+    \includegraphics[width=1.\textwidth]{data-depend}
+    
+
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    std :: memory\_order\_consume
+    
+    
+    \normalsize
+    (\textbf{Data Dependency Ordering})A consume load makes prior writes to data-dependent memory
+    locations made by the thread that did the release visible in the
+    loading thread.
     
     \includegraphics[width=1.\textwidth]{dekker-consume-order}
 \end{frame}
@@ -651,18 +770,158 @@ void consume(int iterations) {
 \begin{frame}
     \frametitle{C++11 Memory Model}
     \LARGE
+    std :: memory\_order\_consume
+    
+    
+    \normalsize
+    (\textbf{Data Dependency Ordering})A consume load makes prior writes to data-dependent memory
+    locations made by the thread that did the release visible in the
+    loading thread.
+    
+    \includegraphics[width=1.\textwidth]{consume-order}
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    std :: memory\_order\_consume
+    
+    
+    \normalsize
+    (\textbf{Data Dependency Ordering})A consume load makes prior writes to data-dependent memory
+    locations made by the thread that did the release visible in the
+    loading thread.
+    
+    \includegraphics[width=1.\textwidth]{consume-order-perf}
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    \LARGE
     std :: memory\_order\_relaxed
     
     
     \normalsize
-    A consume load makes prior writes to data-dependent memory
-    locations made by the thread that did the release visible in the
-    loading thread.
+   The memory\_order\_relaxed ensure these operations are atomic, but don’t impose any ordering constraints/memory barriers that aren’t already there.
+   
+    relaxed order允许单线程上不同的memory location进行reorder，但是对于同一个memory location不能进行reorder。
     
-    
-    
-    \includegraphics[width=1.\textwidth]{dekker-consume-order}
+    \centering
+    \includegraphics[width=.7\textwidth]{relax-order}
 \end{frame}
 
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{Lock-Free Programming}
+\includegraphics[width=1.\textwidth]{its-lock-free}
+    
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{Lock-Free Programming}
+    
+   \centering 
+   
+    \includegraphics[width=.4\textwidth]{lock-free-tech}
+%    https://preshing.com/20120612/an-introduction-to-lock-free-programming/
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{Lock-Free Programming}
+    \LARGE
+    Lock-free Stack
+    \normalsize    
+    \begin{block}{}
+        \begin{verbatim}
+template<typename T>
+class lock_free_stack
+{
+    private:
+        struct node
+        {
+            T data;
+            node* next;
+            node(T const& data_):  // 1
+                data(data_)
+        {}
+    };
+\end{verbatim}
+    \end{block}
+    
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{Lock-Free Programming}
+    \LARGE
+    Lock-free Stack
+    \normalsize    
+    \begin{block}{}
+        \begin{verbatim}
+    std::atomic<node*> head;
+    
+    public:
+    void push(T const& data)
+    {
+        node* const new_node=new node(data); // 2
+        new_node->next=head.load();  // 3
+        while(!head.compare_exchange_weak(new_node->next,new_node));  // 4
+    }
+        \end{verbatim}
+    \end{block}
+    使用“比较/交换”操作：返回false时，因为比较失败(例如，head被其他线程修改)，会使用head中的内容更新new\_node->next(第一个参数)的内容。
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{Lock-Free Programming}
+    \LARGE
+    Lock-free Stack
+    \normalsize    
+    \begin{block}{}
+        \begin{verbatim}
+    while(!head.compare_exchange_weak(new_node->next,new_node));  // 4
+        
+        if ( head == new_node->next){
+            head = new_node;
+            return true;
+        }
+        else{
+            new_node->next = head;
+            return false;
+        }
+        \end{verbatim}
+    \end{block}
+    使用“比较/交换”操作：返回false时，因为比较失败(例如，head被其他线程修改)，会使用head中的内容更新new\_node->next(第一个参数)的内容。
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{Lock-Free Programming}
+    \LARGE
+    Lock-free Stack
+    \normalsize    
+    \begin{block}{}
+        \begin{verbatim}
+void pop(T& result)
+{
+    node* old_head=head.load();
+    while(!head.compare_exchange_weak(old_head,old_head->next));
+    result=old_head->data;
+}
+        \end{verbatim}
+    \end{block}
+这段代码很优雅，但有关于节点泄露的两个问题。首先，这段代码在空链表时不工作：当head指针是空指针时，要访问next指针时，将引起未定义行为。
+%很容易通过对nullptr的检查进行修复(在while循环中)，要不对空栈抛出一个异常，要不返回一个bool值来表明成功与否。
+
+%第二个问题就是异常安全。第3章中介绍栈结构时，了解了在返回值的时候会出现异常安全问题：有异常被抛出时，复制的值将丢失。这种情况下，传入引用是一种可以接受的解决方案；这样就能保证当有异常抛出时，栈上的数据不会丢失。
+\end{frame}
 
 \end{document}
