@@ -1,0 +1,668 @@
+\input{../preamble}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[第12讲]{第12讲 ：Scalable Synchronization on Shared-Memory Multiprocessors - II} % The short title appears at the bottom of every slide, the full title is only on the title page
+\subtitle{第一节：C++ memory order }
+\author{陈渝} % Your name
+\institute[清华大学] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+	清华大学计算机系 \\ % Your institution for the title page
+	\medskip
+	\textit{yuchen@tsinghua.edu.cn} % Your email address
+}
+\date{\today} % Date, can be changed to a custom dateC++ memory order
+
+
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+%\begin{frame}
+%\frametitle{提纲} % Table of contents slide, comment this block out to remove it
+%\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+%\end{frame}
+%
+%%----------------------------------------------------------------------------------------
+%%	PRESENTATION SLIDES
+%%----------------------------------------------------------------------------------------
+%
+%%------------------------------------------------
+%\section{第一节：课程概述} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
+%%------------------------------------------------
+%-------------------------------------------------
+\begin{frame}[plain]
+	\frametitle{Recap }
+	
+	
+	
+	\begin{columns}
+		
+		\begin{column}{.5\textwidth}
+			\centering
+			
+			\includegraphics[width=.7\textwidth]{cache-with-wb-iq}
+
+		\end{column}
+		
+		\begin{column}{.5\textwidth}
+			
+			\Large
+            Cache Coherent in Multi-processor
+			\begin{itemize}
+				\item  MSI 一致性协议
+				\item MESI 一致性协议
+			
+			\end{itemize}
+			
+		\end{column}
+		
+		
+	\end{columns}
+	
+\tiny ref:
+Some info are from
+
+Paul McKenney (IBM) Tom Hart (University of Toronto), Frans Kaashoek (MIT), 
+Daniel J. Sorin "A Primer on Memory Consistency and Cache Coherence", Fabian Giesen "Cache coherency primer", Mingyu Gao(Tsinghua),Yubin Xia(SJTU)
+"The C/C++ Memory Model: Overview and Formalization",Mark Batty,etc. "C++ 11 Memory Consistency Model", Sebastian Gerstenberg 
+
+	
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[plain]	
+    \frametitle{Recap}
+    
+    
+    \begin{columns}
+        
+        \begin{column}{.4\textwidth}
+            \includegraphics[width=1.\textwidth]{cache-with-wb-iq}
+        \end{column}
+        \begin{column}{.6\textwidth}
+			
+\Large
+ Memory Consistency in Multi-processor
+\begin{itemize}
+    \item Sequential ConThe C/C++ Memory Model:
+    Overview and Formalization
+    sistency
+    \item  Total Store Order Consistency
+    \item Acquire/Release Consistency
+    
+    \item Relaxed/Weak Consistency
+    
+    
+\end{itemize}
+        \end{column}
+    \end{columns}
+    
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}
+  \frametitle{Real Hardware/Compiler}
+    Real hardware doesn’t run the code that you wrote.
+    
+    Real compiler doesn’t produce the code that you wrote.
+    \includegraphics[width=1.\textwidth]{c-compiler-mem-model}
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{Real Hardware/Compiler}
+    Real hardware doesn’t run the code that you wrote.
+    
+    Real compiler doesn’t produce the code that you wrote.
+    \includegraphics[width=.7\textwidth]{cpu-archs-mem-model}
+    
+        \tiny
+    http://preshing.com/20140709/the-purpose-of-memory\_order\_consume-in-cpp11/
+    
+%    https://preshing.com/20120612/an-introduction-to-lock-free-programming/
+%    在x86 / 64指令级别上，每次从内存中加载都会获取语义，并且每次存储到内存都将提供释放语义–至少对于非SSE指令和非写组合内存。结果，过去写无锁代码在x86 / 64上有效，但在其他处理器上却失败了。
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{Real Hardware/Compiler}
+    Real hardware doesn’t run the code that you wrote.
+    
+    Real compiler doesn’t produce the code that you wrote.
+    \includegraphics[width=.7\textwidth]{dekker-algorithm}
+    
+    根据英特尔的规范:在本示例的末尾，r1和r2都等于0是合法的
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{Real Hardware/Compiler}
+    Real hardware doesn’t run the code that you wrote.
+    
+    Real compiler doesn’t produce the code that you wrote.
+    
+    \centering
+    \includegraphics[width=.5\textwidth]{dekker-algorithm}
+    \includegraphics[width=.7\textwidth]{dekker-x86}
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{Real Hardware/Compiler}
+    Real hardware doesn’t run the code that you wrote.
+    
+    Real compiler doesn’t produce the code that you wrote.
+    
+    \centering
+    \includegraphics[width=.5\textwidth]{dekker-algorithm}
+    \includegraphics[width=.5\textwidth]{dekker-x86-reorder}
+    
+    \tiny
+    https://preshing.com/20120515/memory-reordering-caught-in-the-act/
+\end{frame}
+%----------------------------------------------
+\begin{frame}
+    \frametitle{Real Hardware/Compiler}
+    Real hardware doesn’t run the code that you wrote.
+    
+    Real compiler doesn’t produce the code that you wrote.
+    
+    Dekkers Algorithm, g++ -O2
+    \includegraphics[width=1.\textwidth]{dekker-asm}
+\end{frame}
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    
+    
+    \begin{columns}
+        
+        \begin{column}{.4\textwidth}
+            \includegraphics[width=1.\textwidth]{cpp-mem-model}
+        \end{column}
+        \begin{column}{.6\textwidth}
+            
+            \Large
+            History
+            \normalsize
+            \begin{itemize}
+                \item In 2011, new versions of the ISO standards for C and C++,
+                informally known as C11 and C++11, were ratified.
+                
+                \item These standards define a memory model for C/C++
+                \item Support for this model has recently become available in popular
+                compilers (GCC 4.4, Intel C++ 13.0, MSVC 11.0, Clang 3.1).
+                
+                
+                
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    
+    
+    \begin{columns}
+        
+        \begin{column}{.4\textwidth}
+            \includegraphics[width=1.\textwidth]{cpp-mem-model}
+        \end{column}
+        \begin{column}{.6\textwidth}
+            
+            \Large
+            Why C++11 Memory Model
+            \normalsize
+            \begin{itemize}
+                \item 在C++11之前，其实是没有定义内存模型的，我们所使用的都是一些处理器/编译器暴露的同步原语，比如 GCC 的内联汇编，内建函数之类的,有着不同的实现。
+                \item C++11在标准库中引入了memory model的意义在于在High Level Language层面实现对在多处理器中多线程共享内存的访问，实现跨编译器,OS和硬件的差异性。
+
+                
+                
+            
+                
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    
+    
+    \begin{columns}
+        
+        \begin{column}{.4\textwidth}
+            \includegraphics[width=1.\textwidth]{cpp-mem-model}
+        \end{column}
+        \begin{column}{.6\textwidth}
+            
+            \Large
+            Happens-before
+            \normalsize
+            \begin{itemize}
+                \item An important fundamental concept in understanding the
+                memory model
+                
+                \item A guarantee that memory writes by one specific
+                statement are visible to another specific statement
+                
+                
+            \end{itemize}
+            
+
+        \end{column}
+    \end{columns}
+    
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    Happens-before
+    %    \normalsize
+    \large    
+    \begin{block}{}
+        \begin{verbatim}
+int A = 0;
+int B = 0;
+
+void foo()
+{
+    A = B + 1;              // (1)
+    B = 1;                  // (2)
+}
+\end{verbatim}
+    \end{block}
+    
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    Happens-before
+    
+        \centering    
+   \includegraphics[width=.5\textwidth]{happen-before-debug}
+    
+\end{frame}
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{C++11 Memory Model}
+    \LARGE
+     Happens-before
+%    \normalsize
+\large    
+    \begin{block}{}
+        \begin{verbatim}
+    int A, B;
+    
+    void foo()
+    {
+        A = B + 1;
+        B = 0;
+    }
+\end{verbatim}
+    \end{block}
+    
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    Happens-before
+    %    \normalsize
+    \large    
+    
+    GCC 4.6.1
+    \begin{block}{}
+        \begin{verbatim}
+$ gcc -S -masm=intel foo.c
+$ cat foo.s
+    ...
+    mov     eax, DWORD PTR _B  (redo this at home...)
+    add     eax, 1
+    mov     DWORD PTR _A, eax
+    mov     DWORD PTR _B, 0
+    ...
+        \end{verbatim}
+    \end{block}
+    
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    Happens-before
+    %    \normalsize
+    \large    
+    
+    GCC 4.6.1
+    \begin{block}{}
+        \begin{verbatim}
+$ gcc -O2 -S -masm=intel foo.c
+$ cat foo.s
+    ...
+    mov     eax, DWORD PTR B
+    mov     DWORD PTR B, 0
+    add     eax, 1
+    mov     DWORD PTR A, eax
+    ...
+        \end{verbatim}
+    \end{block}
+    
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    Happens-before
+    %    \normalsize
+    \large    
+    
+    GCC 4.6.1
+    \begin{block}{}
+        \begin{verbatim}
+    int A, B;
+    
+    void foo()
+    {
+        A = B + 1;
+        asm volatile("" ::: "memory");
+        B = 0;
+    }
+        \end{verbatim}
+    \end{block}
+    
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    Happens-before
+    %    \normalsize
+    \large    
+    
+    GCC 4.6.1
+    \begin{block}{}
+        \begin{verbatim}
+$ gcc -O2 -S -masm=intel foo.c
+$ cat foo.s
+    ...
+    mov     eax, DWORD PTR _B
+    add     eax, 1
+    mov     DWORD PTR _A, eax
+    mov     DWORD PTR _B, 0
+    ...
+        \end{verbatim}
+    \end{block}
+    
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    Happens-before
+    %    \normalsize
+    \large    
+    \begin{block}{}
+        \begin{verbatim}
+//x86
+#define COMPILER_BARRIER() asm volatile("" ::: "memory") 
+//PowerPC
+#define RELEASE_FENCE() asm volatile("lwsync" ::: "memory") 
+==============================================
+int Value;
+std::atomic<int> IsPublished(0);
+void sendValue(int x)
+{
+    Value = x;
+    // <-- reordering is prevented here!
+    IsPublished.store(1, std::memory_order_release);
+}
+\end{verbatim}
+    \end{block}
+    
+\end{frame}
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    
+    
+    \begin{columns}
+        
+        \begin{column}{.4\textwidth}
+            \includegraphics[width=1.\textwidth]{cpp-mem-model}
+        \end{column}
+        \begin{column}{.6\textwidth}
+            
+            \Large
+            std :: atomic<T>
+
+            \begin{itemize}
+                \item x.load(memory order)
+                \item x.store (T, memory order)
+                
+            \end{itemize}
+         \normalsize
+        Concurrent accesses on atomic locations do not race.
+        
+        The memory order argument specifies ordering constraints between
+        atomic and non-atomic memory accesses in different threads.
+                    
+        \end{column}
+    \end{columns}
+    
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    std :: atomic<T>
+    
+    \includegraphics[width=.8\textwidth]{atomic-asm}
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    std :: atomic<T>
+    
+    \includegraphics[width=.8\textwidth]{atomic-asm2}
+\end{frame}
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    std :: memory\_order
+    
+    \includegraphics[width=1.\textwidth]{cpp-all-mem-order}
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    std :: memory\_order\_seq\_cst
+    
+    \normalsize
+    There is a total order over all seq cst operations. This order
+    contributes to inter-thread ordering constraints.
+    
+    \includegraphics[width=1.\textwidth]{dekker-seq-order}
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    std :: memory\_order\_release/acquire
+    
+    \large
+\begin{block}{Acquire semantics}
+    
+Acquire semantics is a property that can only apply to operations that read from shared memory, whether they are read-modify-write operations or plain loads. The operation is then considered a \textbf{read-acquire}. Acquire semantics prevent memory reordering of the read-acquire with any read or write operation that follows it in program order.
+\end{block}
+%\includegraphics[width=.3\textwidth]{read-require}
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    std :: memory\_order\_release/acquire
+    
+    \large
+    \begin{block}{Release semantics}
+        
+Release semantics is a property that can only apply to operations that write to shared memory, whether they are read-modify-write operations or plain stores. The operation is then considered a write-release. Release semantics prevent memory reordering of the write-release with any read or write operation that precedes it in program order.
+    \end{block}
+    %\includegraphics[width=.3\textwidth]{read-require}
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    std :: memory\_order\_release/acquire
+    
+    \centering
+    \includegraphics[width=.6\textwidth]{acq-rel}
+\end{frame}
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    std :: memory\_order\_release/acquire
+    
+    \normalsize
+    An acquire load makes prior writes to other memory locations
+    made by the thread that did the release visible in the loading
+    thre\includegraphics[width=1.\textwidth]{dekker-acrel-order}ad.
+    
+    
+    \includegraphics[width=1.\textwidth]{dekker-acrel-order}
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    std :: memory\_order\_release/acquire
+\normalsize    
+\begin{block}{}
+    \begin{verbatim}
+void produce() {
+    payload = 42;
+    guard.store(1, std::memory_order_release)
+}
+void consume(int iterations) {
+    for(int i = 0; i < iterations; i++){
+      if(guard.load(std::memory_order_acquire))
+        result[i] = payload;
+    }
+}
+\end{verbatim}
+\end{block}
+
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    std :: memory\_order\_release/acquire
+    
+    
+    \includegraphics[width=.7\textwidth]{acrel-asm}
+    \tiny
+    http://preshing.com/20140709/the-purpose-of-memory\_order\_consume-in-cpp11/
+    
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    std :: memory\_order\_release/acquire
+%    \normalsize
+    
+    1000 iterations:
+    
+    \includegraphics[width=.8\textwidth]{acrel-perf}
+    \tiny
+    http://preshing.com/20140709/the-purpose-of-memory\_order\_consume-in-cpp11/
+    
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    std :: memory\_order\_consume
+    
+    
+    \normalsize
+    A consume load makes prior writes to data-dependent memory
+    locations made by the thread that did the release visible in the
+    loading thread.
+    
+    
+    
+    \includegraphics[width=1.\textwidth]{dekker-consume-order}
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    std :: memory\_order\_relaxed
+    
+    
+    \normalsize
+    A consume load makes prior writes to data-dependent memory
+    locations made by the thread that did the release visible in the
+    loading thread.
+    
+    
+    
+    \includegraphics[width=1.\textwidth]{dekker-consume-order}
+\end{frame}
+
+
+\end{document}
