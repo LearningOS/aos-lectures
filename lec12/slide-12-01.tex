@@ -5,7 +5,7 @@
 %----------------------------------------------------------------------------------------
 
 \title[第12讲]{第12讲 ：Scalable Synchronization on Shared-Memory Multiprocessors - II} % The short title appears at the bottom of every slide, the full title is only on the title page
-\subtitle{第一节：C++ memory order }
+\subtitle{Multiprocessor Memory Model \& Multiprocessor Programming}
 \author{陈渝} % Your name
 \institute[清华大学] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
 {
@@ -71,7 +71,7 @@ Some info are from
 Paul McKenney (IBM) Tom Hart (University of Toronto), Frans Kaashoek (MIT), 
 Daniel J. Sorin "A Primer on Memory Consistency and Cache Coherence", Fabian Giesen "Cache coherency primer", Mingyu Gao(Tsinghua),Yubin Xia(SJTU)
 "The C/C++ Memory Model: Overview and Formalization",Mark Batty,etc. "C++ 11 Memory Consistency Model", Sebastian Gerstenberg;"HOW UBISOFT MONTREAL
-DEVELOPS GAMES FOR MULTICORE Before \& After C++11", Jeff Preshing
+DEVELOPS GAMES FOR MULTICORE Before \& After C++11", Jeff Preshing;etc.
 
 	
 \end{frame}
@@ -92,9 +92,7 @@ DEVELOPS GAMES FOR MULTICORE Before \& After C++11", Jeff Preshing
 \Large
  Memory Consistency in Multi-processor
 \begin{itemize}
-    \item Sequential ConThe C/C++ Memory Model:
-    Overview and Formalization
-    sistency
+    \item Sequential Consistency
     \item  Total Store Order Consistency
     \item Acquire/Release Consistency
     
@@ -106,6 +104,15 @@ DEVELOPS GAMES FOR MULTICORE Before \& After C++11", Jeff Preshing
     \end{columns}
     
 \end{frame}
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{Multiprocessor Programming}
+
+    \includegraphics[width=.4\textwidth]{book-the-art-multiprocessor-programming}
+    \includegraphics[width=.385\textwidth]{book-cpp-concurrency-in-action}
+\end{frame}
+
 
 %----------------------------------------------
 \begin{frame}
@@ -781,6 +788,57 @@ void consume(int iterations) {
     \includegraphics[width=1.\textwidth]{consume-order}
 \end{frame}
 
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    std :: memory\_order\_consume
+    
+    
+    \large
+    \begin{itemize}
+        \item x86-64 machine code loads Guard into register rcx, then, if rcx is not null, uses rcx to load the payload, thus creating a data dependency between the two load instructions. 
+        \item 86-64’s strong memory model already guarantees that loads are performed in-order, even if there isn’t a data dependency.
+    \end{itemize}
+
+
+
+    
+    \includegraphics[width=1.\textwidth]{consume-x86}
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    std :: memory\_order\_consume
+    
+    
+    \large
+    \begin{itemize}
+        \item PowerPC machine code loads Guard into register r9, then uses r9 to load the payload, thus creating a data dependency between the two load instructions. 
+        \item completely avoid the "\textit{\textbf{cmp;bne;isync}}" sequence of instructions that formed a memory barrier in the original example, while still ensuring that the two loads are performed in-order.
+    \end{itemize}
+
+    \includegraphics[width=.8\textwidth]{consume-ppc}
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    std :: memory\_order\_consume
+    
+    
+    \large
+    \begin{itemize}
+        \item ARMV7 machine code loads Guard into register r4, then uses r4 to load the payload, thus creating a data dependency between the two load instructions.  
+        \item completely avoid the "\textbf{\textit{dmb ish }}" instruction that was present in the original example, while still ensuring that the two loads are performed in-order.
+    \end{itemize}
+    
+    \includegraphics[width=.8\textwidth]{consume-armv7}
+\end{frame}
 %----------------------------------------------
 \begin{frame}
     \frametitle{C++11 Memory Model}
@@ -796,6 +854,18 @@ void consume(int iterations) {
     \includegraphics[width=1.\textwidth]{consume-order-perf}
 \end{frame}
 
+%----------------------------------------------
+\begin{frame}
+    \frametitle{C++11 Memory Model}
+    \LARGE
+    std :: memory\_order\_consume
+   
+   \normalsize
+   \begin{block}{real world -- RCU}
+    在真实世界中使用这一技术--利用数据依赖顺序以避免内存栅栏的例子就是Linux内核。Linux提供了读-复制-更新（RCU）的同步机制，适合构建在多个线程中需要多读少写的共享变量(包括指针等)数据结构。Linux实际上没有使用C++11消费语义来去除那些内存栅栏,而是依靠它自己的API和规范。其实起初RCU就被看作是给C++11添加消费语义的动机。  
+    \end{block} 
+ 
+\end{frame}
 %----------------------------------------------
 \begin{frame}
     \frametitle{C++11 Memory Model}
