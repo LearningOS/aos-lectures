@@ -248,14 +248,6 @@ acquire (qnode *L, qnode *I) {
 \end{frame}
 
 
-%----------------------------------------------
-\begin{frame}[fragile]
-    \frametitle{MCS lock}
-    \centering
-    Locking strategy comparison
-    
-    \includegraphics[width=.7\textwidth]{mcs-lock-perf}
-\end{frame}
 
 %----------------------------------------------
 \begin{frame}[fragile]
@@ -264,6 +256,58 @@ acquire (qnode *L, qnode *I) {
     But not a  panacea
     \includegraphics[width=.7\textwidth]{mcs-lock-perf2}
 \end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{CLH lock}
+    \centering
+    \includegraphics[width=.8\textwidth]{clh-lock}
+\end{frame}
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{CLH lock}    
+    \begin{block}{}
+        \begin{verbatim}
+type qnode = record
+    prev : ^qnode
+    succ_must_wait : Boolean
+    
+type lock = ^qnode   // initialized to point to an unowned qnode
+
+procedure acquire_lock (L : ^lock, I : ^qnode)
+    I->succ_must_wait := true
+    pred : ^qnode := I->prev := fetch_and_store(L, I)
+    repeat while pred->succ_must_wait
+
+procedure release_lock (ref I : ^qnode)
+    pred : ^qnode := I->prev
+    I->succ_must_wait := false
+    I := pred    // take pred's qnode
+ \end{verbatim}
+    \end{block}         
+    
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{lock comparison}
+    \centering
+    Locking strategy comparison
+    
+    \includegraphics[width=.7\textwidth]{mcs-lock-perf}
+\end{frame}
+
+
+MCS 来自于其发明人名字的首字母： John Mellor-Crummey和Michael Scott。
+CLH的发明人是：Craig，Landin and Hagersten。
+MCS Spinlock 是一种基于链表的可扩展、高性能、公平的自旋锁，申请线程只在本地变量上自旋，直接前驱负责通知其结束自旋，从而极大地减少了不必要的处理器缓存同步的次数，降低了总线和内存的开销
+
+从代码实现来看，CLH比MCS要简单得多。
+从自旋的条件来看，CLH是在前驱节点的属性上自旋，而MCS是在本地属性变量上自旋
+从链表队列来看，CLH的队列是隐式的，CLHNode并不实际持有下一个节点；MCS的队列是物理存在的。
+CLH锁释放时只需要改变自己的属性，MCS锁释放则需要改变后继节点的属性。
+
 %----------------------------------------------
 %----------------------------------------------
 \end{document}
