@@ -1,0 +1,269 @@
+\input{../preamble}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[第14讲]{第14讲: Concurrency in OS Kernel} % The short title appears at the bottom of every slide, the full title is only on the title page
+\subtitle{第二节：Scalable Concurrency -- Lock}
+\author{陈渝} % Your name
+\institute[清华大学] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+	清华大学计算机系 \\ % Your institution for the title page
+	\medskip
+	\textit{yuchen@tsinghua.edu.cn} % Your email address
+}
+\date{\today} % Date, can be changed to a custom dateC++ memory order
+
+
+
+\begin{document}
+
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+    
+%\begin{frame}
+%\frametitle{提纲} % Table of contents slide, comment this block out to remove it
+%\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+%\end{frame}
+%
+%%----------------------------------------------------------------------------------------
+%%	PRESENTATION SLIDES
+%%----------------------------------------------------------------------------------------
+%
+
+%----------------------------------------------
+%-------------------------------------------------
+\begin{frame}
+    \frametitle{Resource}
+    
+    
+    
+
+	\begin{columns}
+    
+    \begin{column}{.5\textwidth}
+        \centering
+        
+        \includegraphics[width=.7\textwidth]{book-cpp-concurrency-in-action}
+        
+    \end{column}
+    
+    \begin{column}{.5\textwidth}
+        
+      \includegraphics[width=.7\textwidth]{perfbook}
+       
+        
+    \end{column}
+    
+    
+\end{columns}
+    
+    \tiny Reference:
+    
+    "Is Parallel Programming Hard, And, If So, What Can You Do About It?",Paul McKenney;\\
+    "C++Concurrency in Action", ANTHONY WILLIAMS; \\
+    "CS510 - Advanced Topics in Concurrency", Jonathan Walpole;很 
+    Adam Belay from MIT PDOS
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{Scalable Locking}
+    \Large
+    \begin{itemize}
+    \item Why do we need locking in the kernel?
+    \item Which problems are we trying to solve?
+    \item What implementation choices do we have?
+    \item Is there a one-size-fits-all solution?
+  
+\end{itemize}
+    
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{ticket spinlock}
+    \Large
+    Goal
+    \begin{itemize}
+        \item Correctness:  Mutual exclusion, Progress, Bounded wait
+        \item  Fairness       
+        \item Performance
+        
+        
+    \end{itemize}
+    
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{ticket spinlock}
+    \Large
+    Idea:
+    \begin{itemize}
+        \item reserve each thread's turn to use a lock
+        \item each thread spins until their turn
+        \item Use new atomic primitive:
+        fetch-and-add (FAA)
+        \item Spin while not thread's ticket != turn
+        \item Release: Advance to next turn
+        
+ \end{itemize}
+    
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{ticket spinlock}
+%    \large    
+    \begin{block}{}
+        \begin{verbatim}
+typedef  struct {
+    int ticket;
+    int turn;
+} lock_t;
+
+void lock_init(lock_t *lock) {
+    lock->ticket = 0;
+    lock->turn = 0;
+}
+void acquire(lock_t *lock) {
+    int myturn = FAA(&lock->ticket);
+    while (lock->turn != myturn); // spin
+}
+void release(lock_t *lock) { lock->turn += 1; }
+
+        \end{verbatim}
+    \end{block} 
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{ticket spinlock}
+    \Large
+    Ticket lock time analysis
+    
+    \begin{itemize}
+        \item Atomic increment – O(1) broadcast message        
+        \item Then read-only spin, no cost until next release             
+        \item  release OP invalidates message sent to all cores, and O(N) find messages, as they re-read        
+        \item  But fairness and less bus traffic while spinning
+        
+        
+    \end{itemize}
+    Ticket are “non-scalable” locks, cost of handoff scales with number of waiters
+    
+    
+\end{frame}
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{MCS lock}
+    \Large
+
+    \begin{itemize}
+        \item Goal: O(1) message release time
+        \item Can we wake just one core at a time?
+        \item  Idea: Have each core spin on a different cache-line
+    \end{itemize}    
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{MCS lock}
+    \Large
+    
+    \begin{itemize}
+        \item Each CPU has a qnode structure in its local memory
+
+    \begin{block}{}
+    \begin{verbatim}
+    typedef struct qnode {
+        struct qnode *next;
+        bool locked;
+    } qnode;
+\end{verbatim}
+\end{block}         
+        \item  A lock is a qnode pointer to the tail of the list      
+        \item While waiting, spin on local locked flag
+        
+    \end{itemize}    
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{MCS lock}
+\centering
+\includegraphics[width=1.\textwidth]{mcs-lock}
+\end{frame}
+
+
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{MCS lock}
+    \Large
+     Acquiring MCS locks
+       
+        \begin{block}{}
+            \begin{verbatim}
+acquire (qnode *L, qnode *I) {
+    I->next = NULL;
+    qnode *predecessor = I;
+    XCHG (*L, predecessor);
+    if (predecessor != NULL) {
+        I->locked = true;
+        predecessor->next = I;
+        while (I->locked) ;
+    }
+}
+\end{verbatim}
+        \end{block}         
+
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{MCS lock}
+    \Large
+    Releasing MCS locks
+    
+    \begin{block}{}
+        \begin{verbatim}
+    release (lock *L, qnode *I) {
+        if (!I->next)
+            if (CAS (*L, I, NULL))
+                return;
+        while (!I->next) ;
+        I->next->locked = false;
+    }
+\end{verbatim}
+    \end{block}         
+    
+\end{frame}
+
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{MCS lock}
+    \centering
+    Locking strategy comparison
+    
+    \includegraphics[width=.7\textwidth]{mcs-lock-perf}
+\end{frame}
+
+%----------------------------------------------
+\begin{frame}[fragile]
+    \frametitle{MCS lock}
+    \centering
+    But not a  panacea
+    \includegraphics[width=.7\textwidth]{mcs-lock-perf2}
+\end{frame}
+%----------------------------------------------
+%----------------------------------------------
+\end{document}
