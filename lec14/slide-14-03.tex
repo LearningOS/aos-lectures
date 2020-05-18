@@ -64,7 +64,7 @@
     
     "Is Parallel Programming Hard, And, If So, What Can You Do About It?",Paul McKenney;\\
     "C++Concurrency in Action", ANTHONY WILLIAMS; \\
-    "CS510 - Advanced Topics in Concurrency", Jonathan Walpole;很 
+    "CS510 - Advanced Topics in Concurrency", Jonathan Walpole;
     Adam Belay from MIT PDOS
     
 %    http://www2.rdrop.com/users/paulmck/RCU/
@@ -131,20 +131,6 @@
     
 \end{frame}
 
-
-%----------------------------------------------
-\begin{frame}[fragile]
-    \frametitle{RCU}
-    \Large
-    Goals
-    
-    \begin{itemize}
-        \item Concurrent reads even during updates
-        \item Low space overhead
-        \item Low execution overhead
-    \end{itemize}
-    
-\end{frame}
 
 %----------------------------------------------
 \begin{frame}[fragile]
@@ -233,14 +219,7 @@ The rcu\_assign\_pointer() would publish the new structure, forcing both the com
     \end{block}  
 \end{frame}
 
-
-%-----------------------------------    \Large
-Three fundamental mechanisms
-\begin{itemize}
-    \item  Publish-Subscribe Mechanism (for insertion) 
-    \item  Wait For Pre-Existing RCU Readers to Complete (for deletion) 
-    \item Maintain Multiple Versions of Recently Updated Objects (for readers) 
-\end{itemize}-----------
+%----------------------------------------------
 \begin{frame}[fragile]
     \frametitle{RCU -- Publish-Subscribe Mechanism}
     \Large

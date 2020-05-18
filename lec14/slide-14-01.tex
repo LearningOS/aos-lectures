@@ -400,7 +400,7 @@ Implementation
     \end{block}        
     
     \Large
-    spin\_lockk\_irqsave()
+    spin\_lock\_irqsave()
     %    \normalsize
     \begin{itemize}
         \item Disables interrupts locally
@@ -507,19 +507,19 @@ each other using spin-locks
      \end{itemize}  
 \end{frame} 
  
-%----------------------------------------------
- \begin{frame}[fragile]
- \frametitle{Spin Locks \& Interrupt Disabling}
- \large    
- \begin{block}{}
-     \begin{verbatim}
-     spinlock_t mr_lock = SPIN_LOCK_UNLOCKED;
-     unsigned long flags;
-     spin_lock_irqsave(&mr_lock, flags); /* critical section ... */
-     spin_unlock_irqrestore(&mr_lock, flags);
-     \end{verbatim}
- \end{block} 
-\end{frame}
+%%----------------------------------------------
+% \begin{frame}[fragile]
+% \frametitle{Spin Locks \& Interrupt Disabling}
+% \large    
+% \begin{block}{}
+%     \begin{verbatim}
+%     spinlock_t mr_lock = SPIN_LOCK_UNLOCKED;
+%     unsigned long flags;
+%     spin_lock_irqsave(&mr_lock, flags); /* critical section ... */
+%     spin_unlock_irqrestore(&mr_lock, flags);
+%     \end{verbatim}
+% \end{block} 
+%\end{frame}
 
 %----------------------------------------------
 \begin{frame}[fragile]
