@@ -258,48 +258,93 @@ Initial  release: 1985
 
 
 
+
+
+
 %-------------------------------------------------
 \begin{frame}[plain]
-	\frametitle{Microkernel-- L4}
-	
-	%Task: unit of execution consisting of an address space, ports, and threads.
-	%Thread: basic unit of execution, shares address space, ports with other threads in task.
-	%Port: communication channel used to send messages between tasks.  Tasks must have correct port rights to send message to a task.
-	%Message: basic unit of communication consisting of a typed set of data objects.
-	%Memory Object: source of memory tasks can map into their address space; includes files and pipes.	
-	
-	\begin{columns}
-		
-		\begin{column}{.4\textwidth}
-			\centering
-			\includegraphics[width=.3\textwidth]{l4-author}
-			\\
-			\includegraphics[width=1.\textwidth]{l4-perf}
-			%			Developed at CMU, Led by Rick Rashid, Initial release: 1985, Big impact (as we will see)
-		\end{column}
-		
-		\begin{column}{.6\textwidth}
-			
-			%			\Large
-			\begin{itemize}
-				\item Second generation microkernel -- L4 by Jochen Liedtke (GMD)
-				\item Performance
-				\begin{itemize}
-					\item synchronous IPCs  -->  async IPCs (like epoll in Linux)
-					\item smaller, Mach 3(330 KB) --> L4 (12KB)
-					\item IPC security checks moved to user process
-					\item IPC is hardware dependent
-				\end{itemize}		
-			\end{itemize}	
-			
-		\end{column}
-		
-		
-	\end{columns}
-	
+    \frametitle{Microkernel-- L4}
+    
+    %Task: unit of execution consisting of an address space, ports, and threads.
+    %Thread: basic unit of execution, shares address space, ports with other threads in task.
+    %Port: communication channel used to send messages between tasks.  Tasks must have correct port rights to send message to a task.
+    %Message: basic unit of communication consisting of a typed set of data objects.
+    %Memory Object: source of memory tasks can map into their address space; includes files and pipes.	
+    % GMD是德国国家信息技术研究院 相当于中科院计算所加上软件所 https://blog.csdn.net/wqqr123456/article/details/8521979
+    \begin{columns}
+        
+        \begin{column}{.4\textwidth}
+            \centering
+            \includegraphics[width=.3\textwidth]{l4-author}
+            \\
+            \includegraphics[width=1.\textwidth]{l4-perf}
+            %			Developed at CMU, Led by Rick Rashid, Initial release: 1985, Big impact (as we will see)
+        \end{column}
+        
+        \begin{column}{.6\textwidth}
+            
+            %			\Large
+            \begin{itemize}
+                \item Second generation microkernel -- L4 by Jochen Liedtke (GMD)
+                \item Performance
+                \begin{itemize}
+                    \item synchronous IPCs  -->  async IPCs (like epoll in Linux)
+                    \item smaller, Mach 3(330 KB) --> L4 (12KB)
+                    \item simpler, Mach (140 syscalls) --> L4 (7syscalls)
+                    \item IPC security checks moved to user process
+                    \item IPC is hardware dependent
+                \end{itemize}		
+            \end{itemize}	
+            
+        \end{column}
+        
+        
+    \end{columns}
+    
 \end{frame}
 
 
+%-------------------------------------------------
+\begin{frame}[plain]
+    \frametitle{Microkernel-- L4}
+    
+    %Task: unit of execution consisting of an address space, ports, and threads.
+    %Thread: basic unit of execution, shares address space, ports with other threads in task.
+    %Port: communication channel used to send messages between tasks.  Tasks must have correct port rights to send message to a task.
+    %Message: basic unit of communication consisting of a typed set of data objects.
+    %Memory Object: source of memory tasks can map into their address space; includes files and pipes.	
+    % GMD是德国国家信息技术研究院 相当于中科院计算所加上软件所 https://blog.csdn.net/wqqr123456/article/details/8521979
+    \begin{columns}
+        
+        \begin{column}{.4\textwidth}
+            \centering
+            \includegraphics[width=1.0\textwidth]{L4-ipc}
+            %			\\
+            %			\includegraphics[width=1.\textwidth]{l4-perf}
+            %			Developed at CMU, Led by Rick Rashid, Initial release: 1985, Big impact (as we will see)
+        \end{column}
+        
+        \begin{column}{.6\textwidth}
+            
+            %			\Large
+            \begin{itemize}
+                \item Second generation microkernel -- L4 by Jochen Liedtke (GMD)
+                \item Performance
+                \begin{itemize}
+                    \item synchronous IPCs  -->  async IPCs (like epoll in Linux)
+                    \item smaller, Mach 3(330 KB) --> L4 (12KB)
+                    \item simpler, Mach (140 syscalls) --> L4 (7syscalls)
+                    \item IPC security checks moved to user process
+                    \item IPC is hardware dependent (regs as params of fun)
+                \end{itemize}		
+            \end{itemize}	
+            
+        \end{column}
+        
+        
+    \end{columns}
+    
+\end{frame}
 %-------------------------------------------------
 \begin{frame}[plain]
 	\frametitle{L4 family}
