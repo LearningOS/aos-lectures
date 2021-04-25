@@ -19,7 +19,7 @@ Lec 3+4 System Virtualization Overview
         3. Virtualization Technologies -CPU
         4. Virtualization Technologies -Mmeory
         5. Virtualization Technologies -I/O
-        6. Some VMMs
+        6. Some VMMs & VMM Optimization
         7. Summary
 Lec 5+6 OS/System API/Interface
         1. Introduction
